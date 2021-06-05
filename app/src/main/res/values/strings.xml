@@ -1,3 +1,23 @@
 <resources>
     <string name="app_name">Consumer Protection</string>
+
+    <string name="font_header">fonts/Montserrat-Bold.ttf</string>
+    <string name="font_Sub_header">fonts/Montserrat-Medium.ttf</string>
+    <string name="font_para">fonts/Montserrat-Regular.ttf</string>
+    <string name="font_para_light">fonts/Montserrat-Light.ttf</string>
+    <string name="font_para_extra_light">fonts/Montserrat-ExtraLight.ttf</string>
+    <string name="login">Login</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="don_t_you_have_an_account">Don\'t you have an account?</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="sign_in">Sign In</string>
+    <string name="name">Name</string>
+    <string name="confirm_password">Confirm Password</string>
+    <string name="sign_up_as">Sign Up as: </string>
+    <string name="consumer">Consumer</string>
+    <string name="title_activity_home">MainActivity</string>
+    <string name="title_home">Home</string>
+    <string name="title_dashboard">Dashboard</string>
+    <string name="title_notifications">Notifications</string>
 </resources>

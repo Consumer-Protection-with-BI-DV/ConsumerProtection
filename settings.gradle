@@ -1,2 +1,4 @@
+include ':common-libs'
 include ':app'
+project(':common-libs').projectDir = new File(rootDir, 'android-common-libs/common-libs/')
 rootProject.name = "Consumer Protection"

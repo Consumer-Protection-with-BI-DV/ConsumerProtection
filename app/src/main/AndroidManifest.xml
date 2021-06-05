@@ -9,13 +9,27 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ConsumerProtection">
-        <activity android:name=".MainActivity">
+        <activity
+            android:name=".ui.HomeActivity"
+            android:label="@string/title_activity_home"></activity>
+        <activity
+            android:name=".ui.MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/Fullscreen">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".ui.LoginActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeAuthentication" />
+        <activity
+            android:name=".ui.SignUpActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/ThemeAuthentication" />
     </application>
 
 </manifest>

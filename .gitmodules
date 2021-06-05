@@ -1,0 +1,3 @@
+[submodule "android-common-libs"]
+	path = android-common-libs
+	url = https://github.com/CharithaRatnayake/android-common-libs.git
