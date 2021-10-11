@@ -48,6 +48,15 @@
                 app:layout_constraintTop_toBottomOf="@+id/headerView" />
 
             <com.jachdev.commonlibs.widget.CustomEditText
+                android:id="@+id/et_phone"
+                style="@style/EditText"
+                android:layout_marginTop="@dimen/medium"
+                android:hint="@string/phone_number"
+                android:inputType="phone"
+                app:fontType="@string/font_para"
+                app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+            <com.jachdev.commonlibs.widget.CustomEditText
                 android:id="@+id/et_password"
                 style="@style/EditText"
                 android:layout_marginTop="@dimen/medium"

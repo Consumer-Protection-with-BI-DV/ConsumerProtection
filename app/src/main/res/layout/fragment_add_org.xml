@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.home.HomeFragment">
+
+    <androidx.core.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <androidx.appcompat.widget.LinearLayoutCompat
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/medium"
+            android:orientation="vertical">
+
+            <FrameLayout
+                android:id="@+id/btn_add_logo"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_gravity="center"
+                android:layout_margin="@dimen/medium">
+
+                <com.jachdev.commonlibs.widget.CircleImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:background="@drawable/bg_circle" />
+
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="@dimen/medium"
+                    android:text="@string/add_logo"
+                    android:textSize="12sp"
+                    app:fontType="@string/font_para_light" />
+            </FrameLayout>
+
+            <com.jachdev.commonlibs.widget.CustomEditText
+                android:id="@+id/et_organization_name"
+                style="@style/EditText"
+                android:hint="@string/organization_name"
+                android:inputType="textPersonName|textCapWords"
+                app:fontType="@string/font_para"
+                app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+            <com.jachdev.commonlibs.widget.CustomEditText
+                android:id="@+id/et_description"
+                style="@style/EditTextMultiline"
+                android:hint="@string/description"
+                app:fontType="@string/font_para"
+                app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+            <com.jachdev.commonlibs.widget.CustomTextView
+                android:id="@+id/et_organization_type"
+                style="@style/EditText"
+                android:layout_marginTop="@dimen/low"
+                android:focusable="true"
+                android:clickable="true"
+                android:gravity="center|start"
+                android:hint="@string/organization_type"
+                android:inputType="textPersonName|textCapWords"
+                app:fontType="@string/font_para"
+                app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+            <com.jachdev.commonlibs.widget.CustomButton
+                android:id="@+id/btn_submit"
+                android:layout_marginTop="@dimen/medium"
+                app:fontType="@string/font_para"
+                android:text="@string/submit"
+                style="@style/Button"/>
+
+        </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
+</androidx.constraintlayout.widget.ConstraintLayout>

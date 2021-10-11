@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/customTextView"
+        style="@style/TextView"
+        android:layout_margin="@dimen/medium"
+        android:text="@string/please_add_shop_details"
+        app:fontType="@string/font_para"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.jachdev.commonlibs.widget.CustomEditText
+        android:id="@+id/et_name"
+        style="@style/EditText"
+        android:layout_marginStart="@dimen/medium"
+        android:layout_marginTop="@dimen/medium"
+        android:layout_marginEnd="@dimen/medium"
+        android:hint="@string/shop_name"
+        android:inputType="textPersonName|textCapWords"
+        app:fontType="@string/font_para"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView" />
+
+    <com.jachdev.commonlibs.widget.CustomEditText
+        android:id="@+id/et_phone"
+        style="@style/EditText"
+        android:layout_marginStart="@dimen/medium"
+        android:layout_marginTop="@dimen/medium"
+        android:layout_marginEnd="@dimen/medium"
+        android:hint="@string/phone_number"
+        android:inputType="phone"
+        app:fontType="@string/font_para"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_name" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/et_address"
+        style="@style/EditText"
+        android:layout_marginStart="@dimen/medium"
+        android:layout_marginTop="@dimen/medium"
+        android:layout_marginEnd="@dimen/medium"
+        android:clickable="true"
+        android:focusable="true"
+        android:gravity="center|start"
+        android:lines="4"
+        android:maxLines="4"
+        android:hint="@string/shop_address"
+        android:inputType="textMultiLine"
+        app:fontType="@string/font_para"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/et_phone" />
+
+    <com.jachdev.commonlibs.widget.CustomButton
+        android:id="@+id/btn_submit"
+        style="@style/Button"
+        android:layout_margin="@dimen/medium"
+        android:text="@string/submit"
+        app:fontType="@string/font_para"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

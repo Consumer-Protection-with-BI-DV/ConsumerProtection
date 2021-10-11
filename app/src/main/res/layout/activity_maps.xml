@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".ui.map.MapsActivity">
+
+    <androidx.fragment.app.FragmentContainerView
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.SupportMapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.map.MapsActivity" />
+
+    <ImageButton
+        android:id="@+id/btnBottomView"
+        android:elevation="2dp"
+        android:background="@drawable/bg_white_circle"
+        android:src="@drawable/ic_round_list_24"
+        android:scaleType="fitXY"
+        android:layout_gravity="end"
+        android:layout_marginTop="66dp"
+        android:layout_marginEnd="@dimen/medium"
+        android:layout_width="40dp"
+        android:layout_height="40dp"/>
+
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:id="@+id/bottom_sheet"
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        android:background="#F4F4F4"
+        android:orientation="vertical"
+        app:behavior_hideable="true"
+        app:behavior_peekHeight="50dp"
+        app:layout_behavior="com.google.android.material.bottomsheet.BottomSheetBehavior">
+
+        <com.jachdev.commonlibs.widget.CustomTextView
+            style="@style/TextView"
+            android:textSize="24sp"
+            android:layout_margin="@dimen/medium"
+            android:gravity="center"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/nearest_shops"
+            app:fontType="@string/font_header" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/low"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_behavior="@string/appbar_scrolling_view_behavior"
+            tools:listitem="@layout/item_shop" />
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

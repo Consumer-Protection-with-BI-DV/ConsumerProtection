@@ -27,4 +27,24 @@
         <item name="android:layout_height">45dp</item>
         <item name="android:textColor">@color/colorPrimaryTextAccent</item>
     </style>
+
+    <style name="EditTextMultiline" parent="EditText">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:gravity">start|top</item>
+        <item name="android:layout_marginTop">@dimen/low</item>
+        <item name="android:inputType">textMultiLine</item>
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:paddingLeft">@dimen/medium</item>
+        <item name="android:paddingRight">@dimen/medium</item>
+        <item name="android:lines">4</item>
+        <item name="android:maxLines">4</item>
+    </style>
+
+    <style name="ImageView">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:background">@null</item>
+        <item name="android:contentDescription">@string/image_description</item>
+    </style>
 </resources>

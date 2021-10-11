@@ -1,0 +1,41 @@
+package com.jachdev.consumerprotection.data;
+
+import com.google.gson.annotations.SerializedName;
+import com.jachdev.consumerprotection.AppConstant;
+
+/**
+ * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 10/4/2021.
+ */
+public class AllShopResponse extends Shop{
+
+    @SerializedName("org_name")
+    private String orgName;
+    @SerializedName("logo")
+    private String logo;
+    @SerializedName("description")
+    private String description;
+
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    public String getLogo() {
+        return AppConstant.BASE_URL + AppConstant.IMAGE_PATH + logo;
+    }
+
+    public void setLogo(String logo) {
+        this.logo = logo;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+}

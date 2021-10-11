@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <com.jachdev.commonlibs.widget.CircleImageView
+        android:id="@+id/circleImageView"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/ic_complain"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/customTextView3"
+        style="@style/TextView"
+        android:layout_marginStart="@dimen/medium"
+        android:layout_marginTop="50dp"
+        android:layout_weight="1"
+        android:text="@string/phone_number"
+        app:fontType="@string/font_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/circleImageView" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/customTextView4"
+        style="@style/TextView"
+        android:layout_margin="@dimen/medium"
+        android:layout_weight="1"
+        android:text="@string/asanka_sandaruwan"
+        app:fontType="@string/font_para_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView3" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/customTextView5"
+        style="@style/TextView"
+        android:layout_marginStart="@dimen/medium"
+        android:layout_marginTop="@dimen/low"
+        android:layout_weight="1"
+        android:text="@string/uditha_kariyawasam"
+        app:fontType="@string/font_para_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView4" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/customTextView6"
+        style="@style/TextView"
+        android:layout_marginStart="@dimen/medium"
+        android:layout_marginTop="@dimen/low"
+        android:layout_weight="1"
+        android:text="@string/nelushi_nitara"
+        app:fontType="@string/font_para_light"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView5" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        style="@style/TextView"
+        android:layout_marginEnd="@dimen/medium"
+        android:layout_marginTop="@dimen/low"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:autoLink="phone"
+        android:text="+94 76 606 9933"
+        app:fontType="@string/font_para_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView5" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        style="@style/TextView"
+        android:layout_margin="@dimen/medium"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:autoLink="phone"
+        android:text="+94 70 585 3076"
+        app:fontType="@string/font_para_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView3" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        style="@style/TextView"
+        android:layout_marginEnd="@dimen/medium"
+        android:layout_marginTop="@dimen/low"
+        android:layout_weight="1"
+        android:clickable="true"
+        android:autoLink="phone"
+        android:text="+94 78 772 1566"
+        app:fontType="@string/font_para_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView4" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/customTextView7"
+        style="@style/TextView"
+        android:layout_margin="@dimen/medium"
+        android:layout_weight="1"
+        android:text="@string/email_us"
+        app:fontType="@string/font_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView6" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/customTextView8"
+        style="@style/TextView"
+        android:layout_margin="@dimen/medium"
+        android:layout_weight="1"
+        android:autoLink="email"
+        android:clickable="true"
+        android:text="asanka@gmail.com \n uditha@gmail.com \n nelush@gmail.com"
+        app:fontType="@string/font_para_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView7" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        android:id="@+id/customTextView9"
+        style="@style/TextView"
+        android:layout_margin="@dimen/medium"
+        android:layout_weight="1"
+        android:text="@string/web"
+        app:fontType="@string/font_header"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView8" />
+
+    <com.jachdev.commonlibs.widget.CustomTextView
+        style="@style/TextView"
+        android:layout_margin="@dimen/medium"
+        android:layout_weight="1"
+        android:autoLink="web"
+        android:clickable="true"
+        android:text="https://www.sliit.lk/"
+        app:fontType="@string/font_para_light"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/customTextView9" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

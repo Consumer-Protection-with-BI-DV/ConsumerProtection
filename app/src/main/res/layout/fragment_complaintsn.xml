@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.appcompat.widget.LinearLayoutCompat
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <com.jachdev.commonlibs.widget.CustomEditText
+            android:id="@+id/et_name"
+            style="@style/EditText"
+            android:layout_width="250dp"
+            android:hint="@string/name"
+            android:inputType="textPersonName|textCapWords"
+            app:fontType="@string/font_para"
+            app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+        <com.jachdev.commonlibs.widget.CustomEditText
+            android:id="@+id/et_email"
+            style="@style/EditText"
+            android:layout_width="250dp"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:layout_marginTop="@dimen/medium"
+            app:fontType="@string/font_para"
+            app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+        <com.jachdev.commonlibs.widget.CustomEditText
+            android:id="@+id/et_title"
+            style="@style/EditText"
+            android:layout_width="250dp"
+            android:hint="@string/title"
+            android:inputType="textCapWords"
+            android:layout_marginTop="@dimen/medium"
+            app:fontType="@string/font_para"
+            app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+        <com.jachdev.commonlibs.widget.CustomEditText
+            android:id="@+id/et_description"
+            style="@style/EditTextMultiline"
+            android:layout_width="250dp"
+            android:hint="@string/description"
+            android:layout_marginTop="@dimen/medium"
+            app:fontType="@string/font_para"
+            app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+        <com.jachdev.commonlibs.widget.CustomButton
+            android:id="@+id/btn_submit"
+            android:layout_marginTop="@dimen/medium"
+            app:fontType="@string/font_para"
+            android:text="@string/submit"
+            style="@style/Button"/>
+
+    </androidx.appcompat.widget.LinearLayoutCompat>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -17,4 +17,5 @@
     <color name="colorPrimaryText">@color/colorPrimary</color>
     <color name="colorPrimaryTextAccent">@color/colorAccent</color>
     <color name="colorPrimaryTextHint">#6b6c72</color>
+    <color name="transparent">#00FFFFFF</color>
 </resources>
