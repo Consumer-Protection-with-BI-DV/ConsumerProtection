@@ -14,6 +14,7 @@ public class AllShopResponse extends Shop{
     private String logo;
     @SerializedName("description")
     private String description;
+    private String distance;
 
     public String getOrgName() {
         return orgName;
@@ -37,5 +38,13 @@ public class AllShopResponse extends Shop{
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getDistance() {
+        return distance;
+    }
+
+    public void setDistance(String distance) {
+        this.distance = distance;
     }
 }

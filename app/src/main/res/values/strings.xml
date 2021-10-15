@@ -61,6 +61,7 @@
     <string name="complaints">Complaints</string>
     <string name="contact_us">Contact Us</string>
     <string name="category_type">Category - %s</string>
+    <string name="sub_category_type">Sub Category - %s</string>
     <string name="title">Title</string>
     <string name="asanka_sandaruwan">Asanka Sandaruwan</string>
     <string name="uditha_kariyawasam">Uditha Kariyawasam</string>
@@ -70,4 +71,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="seasonal_variation">Seasonal variation</string>
     <string name="sales_prediction">Sales Prediction</string>
+    <string name="min_max_ratio_10_100">Min/Max Ratio: %s ~ %s</string>
 </resources>

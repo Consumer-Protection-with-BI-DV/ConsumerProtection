@@ -36,6 +36,10 @@ public class PredictionCategory {
         this.subs = subs;
     }
 
+    public boolean hasSubCategory() {
+        return subs != null && !subs.isEmpty();
+    }
+
     public static class SubCategory {
 
         public SubCategory(String name) {

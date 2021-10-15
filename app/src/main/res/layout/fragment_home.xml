@@ -14,7 +14,7 @@
         android:gravity="center|start"
         android:maxLines="1"
         android:textAlignment="center"
-        android:textColor="@color/colorAccent"
+        android:textColor="@color/colorPrimaryText"
         android:textSize="24sp"
         app:fontType="@string/font_header"
         app:layout_constraintStart_toStartOf="parent"
@@ -54,55 +54,125 @@
 
     </FrameLayout>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/view_org"
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:orientation="vertical"
-        android:visibility="visible"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/tv_header">
 
         <androidx.appcompat.widget.LinearLayoutCompat
+            android:id="@+id/view_org"
             android:layout_width="match_parent"
-            android:layout_height="150dp"
-            android:layout_margin="@dimen/medium"
-            android:background="@drawable/bg_side_curve_layout"
-            android:elevation="@dimen/default_radius"
-            android:orientation="horizontal">
-
-            <com.jachdev.commonlibs.widget.CircleImageView
-                android:id="@+id/iv_logo"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
-                android:layout_gravity="start|top"
-                android:layout_margin="@dimen/low"
-                android:src="@drawable/ic_corporation" />
+            android:layout_height="0dp"
+            android:layout_marginBottom="50dp"
+            android:orientation="vertical"
+            android:visibility="visible">
 
             <androidx.appcompat.widget.LinearLayoutCompat
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:layout_height="150dp"
+                android:layout_margin="@dimen/medium"
+                android:background="@drawable/bg_side_curve_layout"
+                android:elevation="@dimen/default_radius"
+                android:orientation="horizontal">
 
-                <com.jachdev.commonlibs.widget.CustomTextView
-                    android:id="@+id/tv_org_name"
-                    style="@style/TextView"
-                    android:layout_marginTop="@dimen/low"
-                    android:layout_marginBottom="@dimen/low"
-                    android:maxLines="2"
-                    android:textSize="24sp"
-                    app:fontType="@string/font_para" />
+                <com.jachdev.commonlibs.widget.CircleImageView
+                    android:id="@+id/iv_logo"
+                    android:layout_width="80dp"
+                    android:layout_height="80dp"
+                    android:layout_gravity="start|top"
+                    android:layout_margin="@dimen/low"
+                    android:src="@drawable/ic_corporation" />
 
-                <com.jachdev.commonlibs.widget.CustomTextView
-                    android:id="@+id/tv_org_description"
-                    style="@style/TextView"
-                    android:layout_marginEnd="@dimen/low"
-                    android:layout_marginBottom="@dimen/low"
-                    android:maxLines="4"
-                    app:fontType="@string/font_para_light" />
+                <androidx.appcompat.widget.LinearLayoutCompat
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <com.jachdev.commonlibs.widget.CustomTextView
+                        android:id="@+id/tv_org_name"
+                        style="@style/TextView"
+                        android:layout_marginTop="@dimen/low"
+                        android:layout_marginBottom="@dimen/low"
+                        android:maxLines="2"
+                        android:textSize="24sp"
+                        app:fontType="@string/font_para" />
+
+                    <com.jachdev.commonlibs.widget.CustomTextView
+                        android:id="@+id/tv_org_description"
+                        style="@style/TextView"
+                        android:layout_marginEnd="@dimen/low"
+                        android:layout_marginBottom="@dimen/low"
+                        android:maxLines="4"
+                        app:fontType="@string/font_para_light" />
+                </androidx.appcompat.widget.LinearLayoutCompat>
             </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <com.jachdev.commonlibs.widget.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/low"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/font_size_medium"
+                android:text="@string/sales_prediction"
+                app:fontType="@string/font_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewSales"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/low"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:spanCount="2"
+                tools:listitem="@layout/item_prediction" />
+
+            <com.jachdev.commonlibs.widget.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/low"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/font_size_medium"
+                android:text="@string/price_prediction"
+                app:fontType="@string/font_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewPrice"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/low"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:spanCount="2"
+                tools:listitem="@layout/item_prediction" />
+
+            <com.jachdev.commonlibs.widget.CustomTextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/low"
+                android:textColor="@color/colorPrimaryText"
+                android:textSize="@dimen/font_size_medium"
+                android:text="@string/import_prediction"
+                app:fontType="@string/font_header"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:id="@+id/recyclerViewImport"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/low"
+                app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+                app:layout_behavior="@string/appbar_scrolling_view_behavior"
+                app:spanCount="2"
+                tools:listitem="@layout/item_prediction" />
+
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

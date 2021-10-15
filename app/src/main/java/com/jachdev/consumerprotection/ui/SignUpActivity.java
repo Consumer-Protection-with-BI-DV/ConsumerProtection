@@ -29,6 +29,7 @@ import com.jachdev.consumerprotection.data.AppResponse;
 import com.jachdev.consumerprotection.data.User;
 import com.jachdev.consumerprotection.data.enums.UserType;
 import com.jachdev.consumerprotection.network.AppService;
+import com.jachdev.consumerprotection.util.SessionManager;
 import com.pd.chocobar.ChocoBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -101,6 +102,7 @@ public class SignUpActivity extends BaseActivity {
                     public void onSuccess(@NotNull AppResponse response) {
                         switch (response.getCode()){
                             case 0:
+                                SessionManager.getInstance().setUser(response.getObjectToType(User.class));
                                 activityToActivity(HomeActivity.class);
                                 SignUpActivity.this.finish();
                                 break;

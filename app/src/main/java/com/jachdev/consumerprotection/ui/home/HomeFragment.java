@@ -9,18 +9,25 @@ import com.jachdev.commonlibs.base.BaseFragment;
 import com.jachdev.commonlibs.widget.CircleImageView;
 import com.jachdev.commonlibs.widget.CustomTextView;
 import com.jachdev.consumerprotection.R;
+import com.jachdev.consumerprotection.data.FirebasePredictionData;
 import com.jachdev.consumerprotection.data.Organization;
 import com.jachdev.consumerprotection.data.User;
+import com.jachdev.consumerprotection.ui.adapter.CommonAdaptor;
 import com.jachdev.consumerprotection.util.Helper;
-import com.jachdev.consumerprotection.util.SessionManager;
 
 import org.jetbrains.annotations.NotNull;
+
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.widget.LinearLayoutCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
+import androidx.recyclerview.widget.GridLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import butterknife.BindView;
 import butterknife.OnClick;
 
@@ -39,6 +46,21 @@ public class HomeFragment extends BaseFragment {
     @BindView(R.id.tv_org_description)
     CustomTextView tvOrgDesc;
 
+    @BindView(R.id.recyclerViewSales)
+    RecyclerView recyclerViewSales;
+    private CommonAdaptor<FirebasePredictionData> salesAdapter;
+    private List<FirebasePredictionData> sales = new ArrayList<>();
+
+    @BindView(R.id.recyclerViewPrice)
+    RecyclerView recyclerViewPrice;
+    private CommonAdaptor<FirebasePredictionData> priceAdapter;
+    private List<FirebasePredictionData> price = new ArrayList<>();
+
+    @BindView(R.id.recyclerViewImport)
+    RecyclerView recyclerViewImport;
+    private CommonAdaptor<FirebasePredictionData> importAdapter;
+    private List<FirebasePredictionData> imp = new ArrayList<>();
+
     private HomeViewModel homeViewModel;
     private FragmentEventListener listener;
 
@@ -55,8 +77,52 @@ public class HomeFragment extends BaseFragment {
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
         showWaiting();
+
+        init();
+
         homeViewModel.getUser().observe(getViewLifecycleOwner(), mUserObserver);
         homeViewModel.getOrganization().observe(getViewLifecycleOwner(), mOrgObserver);
+        homeViewModel.getSalesPredictionData().observe(getViewLifecycleOwner(), mSalesPredictionObserver);
+        homeViewModel.getPricePredictionData().observe(getViewLifecycleOwner(), mPricePredictionObserver);
+        homeViewModel.getImportPredictionData().observe(getViewLifecycleOwner(), mImportPredictionObserver);
+    }
+
+    private void init() {
+        //sales
+        salesAdapter = new CommonAdaptor<>(getBaseActivity(), sales, new CommonAdaptor.CommonAdaptorCallback() {
+            @Override
+            public void onView(int viewType, int position) {
+
+            }
+        });
+        salesAdapter.setViewType(CommonAdaptor.VIEW_TYPE_FIREBASE_PREDICTION);
+
+        recyclerViewSales.setLayoutManager(new GridLayoutManager(getBaseActivity(), 2));
+        recyclerViewSales.setAdapter(salesAdapter);
+
+        //price
+        priceAdapter = new CommonAdaptor<>(getBaseActivity(), price, new CommonAdaptor.CommonAdaptorCallback() {
+            @Override
+            public void onView(int viewType, int position) {
+
+            }
+        });
+        priceAdapter.setViewType(CommonAdaptor.VIEW_TYPE_FIREBASE_PREDICTION);
+
+        recyclerViewPrice.setLayoutManager(new GridLayoutManager(getBaseActivity(), 2));
+        recyclerViewPrice.setAdapter(priceAdapter);
+
+        //imports
+        importAdapter = new CommonAdaptor<>(getBaseActivity(), imp, new CommonAdaptor.CommonAdaptorCallback() {
+            @Override
+            public void onView(int viewType, int position) {
+
+            }
+        });
+        importAdapter.setViewType(CommonAdaptor.VIEW_TYPE_FIREBASE_PREDICTION);
+
+        recyclerViewImport.setLayoutManager(new GridLayoutManager(getBaseActivity(), 2));
+        recyclerViewImport.setAdapter(importAdapter);
     }
 
     @Override
@@ -94,6 +160,66 @@ public class HomeFragment extends BaseFragment {
                 tvOrgName.setAnyText(organization.getName());
                 tvOrgDesc.setAnyText(organization.getDescription());
             }
+        }
+    };
+
+    private Observer<? super HashMap<String, FirebasePredictionData>> mSalesPredictionObserver = new Observer<HashMap<String, FirebasePredictionData>>() {
+        @Override
+        public void onChanged(HashMap<String, FirebasePredictionData> map) {
+
+            List<FirebasePredictionData> sales = new ArrayList<>();
+
+            if(map == null)
+                return;
+
+            for (String key : map.keySet()) {
+                FirebasePredictionData data = map.get(key);
+                data.setName(key);
+                sales.add(data);
+            }
+
+            salesAdapter.setItems(sales);
+
+        }
+    };
+
+    private Observer<? super HashMap<String, FirebasePredictionData>> mPricePredictionObserver = new Observer<HashMap<String, FirebasePredictionData>>() {
+        @Override
+        public void onChanged(HashMap<String, FirebasePredictionData> map) {
+
+            List<FirebasePredictionData> price = new ArrayList<>();
+
+            if(map == null)
+                return;
+
+            for (String key : map.keySet()) {
+                FirebasePredictionData data = map.get(key);
+                data.setName(key);
+                price.add(data);
+            }
+
+            priceAdapter.setItems(price);
+
+        }
+    };
+
+    private Observer<? super HashMap<String, FirebasePredictionData>> mImportPredictionObserver = new Observer<HashMap<String, FirebasePredictionData>>() {
+        @Override
+        public void onChanged(HashMap<String, FirebasePredictionData> map) {
+
+            List<FirebasePredictionData> imp = new ArrayList<>();
+
+            if(map == null)
+                return;
+
+            for (String key : map.keySet()) {
+                FirebasePredictionData data = map.get(key);
+                data.setName(key);
+                imp.add(data);
+            }
+
+            importAdapter.setItems(imp);
+
         }
     };
 

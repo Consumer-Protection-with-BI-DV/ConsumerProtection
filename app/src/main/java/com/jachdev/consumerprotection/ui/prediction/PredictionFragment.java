@@ -72,11 +72,14 @@ public class PredictionFragment extends BaseFragment {
     PieChart pieChart;
     @BindView(R.id.et_category_type)
     CustomTextView et_category_type;
+    @BindView(R.id.et_sub_category)
+    CustomTextView et_sub_category;
 
     private FragmentEventListener listener;
     private AppService service;
     private PredictionType predictionType;
     private PredictionsData predictionsData;
+    private PredictionCategory currentPredictionCategory;
     private PredictionRequest request;
 
     public static Fragment newInstance(PredictionType type) {
@@ -112,10 +115,47 @@ public class PredictionFragment extends BaseFragment {
         builder.setItems(CATS, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                et_category_type.setAnyText(getString(R.string.category_type, predictionsData.getPredictionDataByType(predictionType)[which]));
+                et_sub_category.setVisibility(View.GONE);
+                List<PredictionCategory> categories = predictionsData.getPredictionData(predictionType);
 
-                request.setCategory(predictionsData.getPredictionDataByType(predictionType)[which]);
+                if(categories != null && !categories.isEmpty()){
+                    currentPredictionCategory = categories.get(which);
 
+                    et_category_type.setAnyText(getString(R.string.category_type, currentPredictionCategory.getName()));
+                    request.setCategory(currentPredictionCategory.getName());
+                    request.setSubCategory("");
+
+                    if(currentPredictionCategory.hasSubCategory()){
+                        et_sub_category.setVisibility(View.VISIBLE);
+                    }else{
+
+                        getEssentials();
+                    }
+                }
+            }
+        });
+        // create and show the alert dialog
+        AlertDialog dialog = builder.create();
+        dialog.show();
+    }
+
+    @OnClick(R.id.et_sub_category)
+    void onClickSubCategory(){
+        List<PredictionCategory.SubCategory> list = currentPredictionCategory.getSubCategory();
+        String[] SUBS = new String[list.size()];
+        for (int x = 0; x < list.size(); x++){
+            SUBS[x] = list.get(x).getName();
+        }
+
+        // setup the alert builder
+        AlertDialog.Builder builder = new AlertDialog.Builder(getBaseActivity());
+        builder.setTitle("Choose a sub category");
+        builder.setItems(SUBS, new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+
+                et_sub_category.setAnyText(getString(R.string.sub_category_type, SUBS[which]));
+                request.setSubCategory(SUBS[which]);
                 getEssentials();
             }
         });
@@ -138,6 +178,7 @@ public class PredictionFragment extends BaseFragment {
 
         request = new PredictionRequest();
         et_category_type.setAnyText(getString(R.string.category_type, CATS[0]));
+        et_sub_category.setAnyText(getString(R.string.sub_category_type, ""));
         request.setCategory(CATS[0]);
     }
 
@@ -213,7 +254,7 @@ public class PredictionFragment extends BaseFragment {
             }
         }
 
-        LineDataSet dataSet = new LineDataSet(entries, getString(R.string.import_prediction));
+        LineDataSet dataSet = new LineDataSet(entries, getString(predictionType.getTitle()));
         dataSet.setCubicIntensity(0.5f);
         dataSet.setMode(LineDataSet.Mode.HORIZONTAL_BEZIER);
 
@@ -336,7 +377,7 @@ public class PredictionFragment extends BaseFragment {
     public class PredictionsData{
 
         private final String[] CATS = new String[]{"Rice", "Milk", "Dhal"};
-        private final String[] SALES_CATS = new String[]{"Rice", "Sugar", "CoconutOil", "Dhal", "MilkPowder"};
+        private final String[] SALES_CATS = new String[]{"Sugar", "Rice", "CoconutOil", "Dhal", "MilkPowder"};
         private final String[] SALES_SUB_CATS = new String[]{"Samba", "Nadu"};
         private final String[] PRICE_CATS = new String[]{"Sugar", "Coconut"};
 
@@ -353,8 +394,8 @@ public class PredictionFragment extends BaseFragment {
         }
 
         public List<PredictionCategory> getSalesPredictions(){
-            sales.add(new PredictionCategory(SALES_CATS[0], getSubs(SALES_CATS[0])));
-            sales.add(new PredictionCategory(SALES_CATS[1], null));
+            sales.add(new PredictionCategory(SALES_CATS[0], null));
+            sales.add(new PredictionCategory(SALES_CATS[1], getSubs(SALES_CATS[0])));
             sales.add(new PredictionCategory(SALES_CATS[2], null));
             sales.add(new PredictionCategory(SALES_CATS[3], null));
             sales.add(new PredictionCategory(SALES_CATS[4], null));
@@ -378,6 +419,23 @@ public class PredictionFragment extends BaseFragment {
             }
 
             return subs;
+        }
+
+        public List<PredictionCategory> getPredictionData(PredictionType type) {
+            List<PredictionCategory> categories = new ArrayList<>();
+            switch (type){
+                case IMPORT:
+                    categories = getImportPredictions();
+                    break;
+                case PRICE:
+                    categories = getPricePredictions();
+                    break;
+                case SALES:
+                    categories = getSalesPredictions();
+                    break;
+            }
+
+            return categories;
         }
 
         public String[] getPredictionDataByType(PredictionType type) {

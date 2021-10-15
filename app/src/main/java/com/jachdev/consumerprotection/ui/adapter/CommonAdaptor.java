@@ -10,6 +10,7 @@ import com.jachdev.commonlibs.widget.CustomImageView;
 import com.jachdev.commonlibs.widget.CustomTextView;
 import com.jachdev.consumerprotection.R;
 import com.jachdev.consumerprotection.data.AllShopResponse;
+import com.jachdev.consumerprotection.data.FirebasePredictionData;
 import com.jachdev.consumerprotection.data.Shop;
 import com.jachdev.consumerprotection.util.Helper;
 
@@ -31,6 +32,7 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
 
     public static final int VIEW_TYPE_SHOP = R.layout.item_shop;
     public static final int VIEW_TYPE_SHOP_MAP = R.layout.item_shop_map;
+    public static final int VIEW_TYPE_FIREBASE_PREDICTION = R.layout.item_prediction;
 
     private Context context;
     private CommonAdaptorCallback callback;
@@ -54,6 +56,9 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
             case VIEW_TYPE_SHOP_MAP:
                 view = LayoutInflater.from(parent.getContext()).inflate(VIEW_TYPE_SHOP_MAP, parent, false);
                 return new ShopMapVH(view);
+            case VIEW_TYPE_FIREBASE_PREDICTION:
+                view = LayoutInflater.from(parent.getContext()).inflate(VIEW_TYPE_FIREBASE_PREDICTION, parent, false);
+                return new PredictionVH(view);
             default:
                 throw new IllegalArgumentException("Unexpected view type " + viewType);
         }
@@ -71,6 +76,10 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
             case VIEW_TYPE_SHOP_MAP:
                 ShopMapVH smvh = (ShopMapVH) holder;
                 smvh.onBind((AllShopResponse) t, position);
+                break;
+            case VIEW_TYPE_FIREBASE_PREDICTION:
+                PredictionVH pvh = (PredictionVH) holder;
+                pvh.onBind((FirebasePredictionData) t, position);
                 break;
         }
     }
@@ -120,6 +129,35 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
         if(data!=null) {
             data.clear();
             notifyDataSetChanged();
+        }
+    }
+
+    public class PredictionVH extends RecyclerView.ViewHolder {
+
+        Context context;
+        @BindView(R.id.tvTitle)
+        CustomTextView tvTitle;
+        @BindView(R.id.tvValue)
+        CustomTextView tvValue;
+        @BindView(R.id.tvMinMax)
+        CustomTextView tvMinMax;
+        int position;
+
+        public PredictionVH(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+
+            context = itemView.getContext();
+        }
+
+        public void onBind(FirebasePredictionData item, int position) {
+            this.position = position;
+
+            tvTitle.setAnyText(item.getName());
+            tvValue.setCurrency("Rs", item.getRate());
+            String min = String.valueOf(item.getMin());
+            String max = String.valueOf(item.getMax());
+            tvMinMax.setAnyText(context.getString(R.string.min_max_ratio_10_100, min, max));
         }
     }
 
@@ -183,7 +221,7 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
 
             Helper.loadImageByUrl(iv_logo, item.getLogo());
 
-            tvShopName.setAnyText(item.getName());
+            tvShopName.setAnyText(item.getName() + " - " + item.getDistance());
             tvOrganization.setAnyText(item.getOrgName());
             tvDescription.setAnyText(item.getDescription());
             tvShopAddress.setText(item.getAddress());

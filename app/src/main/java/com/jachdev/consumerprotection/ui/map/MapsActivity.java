@@ -13,15 +13,29 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 
+import android.Manifest;
+import android.annotation.SuppressLint;
+import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.location.Location;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.view.WindowManager;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
+import com.google.android.gms.common.api.ResolvableApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationCallback;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationResult;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.location.LocationSettingsRequest;
+import com.google.android.gms.location.LocationSettingsResponse;
+import com.google.android.gms.location.SettingsClient;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -29,6 +43,10 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
 import com.jachdev.consumerprotection.AppApplication;
 import com.jachdev.consumerprotection.R;
@@ -38,7 +56,14 @@ import com.jachdev.consumerprotection.data.Organization;
 import com.jachdev.consumerprotection.data.Shop;
 import com.jachdev.consumerprotection.network.AppService;
 import com.jachdev.consumerprotection.ui.adapter.CommonAdaptor;
+import com.jachdev.consumerprotection.util.Helper;
 import com.jachdev.consumerprotection.util.SessionManager;
+import com.karumi.dexter.Dexter;
+import com.karumi.dexter.PermissionToken;
+import com.karumi.dexter.listener.PermissionDeniedResponse;
+import com.karumi.dexter.listener.PermissionGrantedResponse;
+import com.karumi.dexter.listener.PermissionRequest;
+import com.karumi.dexter.listener.single.PermissionListener;
 import com.pd.chocobar.ChocoBar;
 
 import org.jetbrains.annotations.NotNull;
@@ -61,6 +86,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private AppService service;
     private CommonAdaptor<AllShopResponse> adaptor;
     private List<AllShopResponse> list = new ArrayList<>();
+
+    private FusedLocationProviderClient mFusedLocationProviderClient;
+    private LocationCallback locationCallback;
+    private Location mLastKnownLocation;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,15 +125,45 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(mFusedLocationProviderClient != null && locationCallback != null)
+            mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+    }
+
+    @Override
     public void onMapReady(GoogleMap googleMap) {
         mMap = googleMap;
 
-        getAllShops();
+        checkLocationPermission();
     }
 
     @OnClick(R.id.btnBottomView)
     void btnShowBottomView(){
         showBottomSheet();
+    }
+
+    private void checkLocationPermission() {
+        Dexter.withActivity(MapsActivity.this)
+                .withPermission(Manifest.permission.ACCESS_FINE_LOCATION)
+                .withListener(new PermissionListener() {
+                    @Override
+                    public void onPermissionGranted(PermissionGrantedResponse response) {
+                        showCurrentLocation();
+                    }
+
+                    @Override
+                    public void onPermissionDenied(PermissionDeniedResponse response) {
+                        showSettingAlert();
+                    }
+
+                    @Override
+                    public void onPermissionRationaleShouldBeShown(PermissionRequest permission, PermissionToken token) {
+                        token.continuePermissionRequest();
+                    }
+                })
+                .check();
     }
 
     private void getAllShops() {
@@ -122,7 +181,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         switch (response.getCode()){
                             case 0:
                                 list = Arrays.asList(response.getObjectToType(AllShopResponse[].class).clone());
-                                adaptor.setItems(list);
+                                addToAdapter(list);
 
                                 addMarker();
                                 break;
@@ -140,6 +199,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 });
     }
 
+    private void addToAdapter(List<AllShopResponse> list) {
+
+        for (AllShopResponse response : list) {
+            String distance = Helper.distance(mLastKnownLocation.getLatitude(),
+                    mLastKnownLocation.getLongitude(), response.getLatLong().getLat(),
+                    response.getLatLong().getLon());
+
+            response.setDistance(distance);
+        }
+
+        adaptor.setItems(list);
+    }
+
     private void addMarker() {
         for (int x = 0; x < list.size(); x++) {
             AllShopResponse response = list.get(x);
@@ -147,10 +219,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
             mMap.addMarker(new MarkerOptions().position(latLng).title(response.getName()).snippet(response.getAddress()));
             mMap.moveCamera(CameraUpdateFactory.newLatLng(latLng));
-
-            if(x == list.size()-1){
-                focusCamera(false, latLng.latitude, latLng.longitude);
-            }
         }
     }
 
@@ -182,6 +250,98 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         CameraUpdate location = CameraUpdateFactory.newLatLngZoom(
                 coordinate, 15);
         mMap.animateCamera(location);
+    }
+
+    @SuppressLint("MissingPermission")
+    private void showCurrentLocation() {
+
+
+        mMap.setMyLocationEnabled(true);
+        mMap.getUiSettings().setMyLocationButtonEnabled(false);
+        mFusedLocationProviderClient = LocationServices.getFusedLocationProviderClient(this);
+
+        //check if gps is enabled or not and then request user to enable it
+        LocationRequest locationRequest = LocationRequest.create();
+        locationRequest.setInterval(10000);
+        locationRequest.setFastestInterval(5000);
+        locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+
+        LocationSettingsRequest.Builder builder = new LocationSettingsRequest.Builder().addLocationRequest(locationRequest);
+
+        SettingsClient settingsClient = LocationServices.getSettingsClient(MapsActivity.this);
+        Task<LocationSettingsResponse> task = settingsClient.checkLocationSettings(builder.build());
+
+        task.addOnSuccessListener(MapsActivity.this, new OnSuccessListener<LocationSettingsResponse>() {
+            @Override
+            public void onSuccess(LocationSettingsResponse locationSettingsResponse) {
+                getDeviceLocation();
+            }
+        });
+
+        task.addOnFailureListener(MapsActivity.this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull Exception e) {
+                if (e instanceof ResolvableApiException) {
+                    ResolvableApiException resolvable = (ResolvableApiException) e;
+                    try {
+                        resolvable.startResolutionForResult(MapsActivity.this, 51);
+                    } catch (IntentSender.SendIntentException e1) {
+                        e1.printStackTrace();
+                    }
+                }
+            }
+        });
+    }
+
+    @SuppressLint("MissingPermission")
+    private void getDeviceLocation() {
+        mFusedLocationProviderClient.getLastLocation()
+                .addOnCompleteListener(new OnCompleteListener<Location>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Location> task) {
+                        if (task.isSuccessful()) {
+                            mLastKnownLocation = task.getResult();
+                            if (mLastKnownLocation != null) {
+                                focusCamera(false, mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+
+                                getAllShops();
+                            } else {
+                                final LocationRequest locationRequest = LocationRequest.create();
+                                locationRequest.setInterval(10000);
+                                locationRequest.setFastestInterval(5000);
+                                locationRequest.setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY);
+                                locationCallback = new LocationCallback() {
+                                    @Override
+                                    public void onLocationResult(LocationResult locationResult) {
+                                        super.onLocationResult(locationResult);
+                                        mLastKnownLocation = locationResult.getLastLocation();
+                                        focusCamera(false, mLastKnownLocation.getLatitude(), mLastKnownLocation.getLongitude());
+
+                                        getAllShops();
+
+                                        mFusedLocationProviderClient.removeLocationUpdates(locationCallback);
+                                    }
+                                };
+                            }
+                        } else {
+                            Toast.makeText(MapsActivity.this, getString(R.string.unable_to_get_your_location), Toast.LENGTH_SHORT).show();
+                        }
+                    }
+                });
+    }
+
+    private void showSettingAlert() {
+        ChocoBar.builder().setBackgroundColor(Color.parseColor("#FFA61B1B"))
+                .setTextSize(18)
+                .setTextColor(Color.parseColor("#FFFFFF"))
+                .setTextTypefaceStyle(Typeface.ITALIC)
+                .setText(getString(R.string.allow_location_permissions))
+                .setMaxLines(4)
+                .centerText()
+                .setActionText(getString(R.string.ok))
+                .setActivity(MapsActivity.this)
+                .build()
+                .show();
     }
 
     private BottomSheetBehavior.BottomSheetCallback mBottomSheetCallback = new BottomSheetBehavior.BottomSheetCallback() {

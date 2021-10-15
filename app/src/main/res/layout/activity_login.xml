@@ -63,7 +63,7 @@
             <com.jachdev.commonlibs.widget.CustomTextView
                 app:fontType="@string/font_header"
                 android:text="@string/sign_up"
-                android:textColor="@color/colorPrimaryTextAccent"
+                android:textColor="@color/colorPrimaryText"
                 style="@style/TextView"
                 android:paddingStart="@dimen/low"
                 android:paddingEnd="@dimen/low"

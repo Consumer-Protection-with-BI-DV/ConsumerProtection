@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "233393668944",
+    "firebase_url": "https://totemic-courage-327512-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "totemic-courage-327512",
+    "storage_bucket": "totemic-courage-327512.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:233393668944:android:d6ad98fa02da28c0292255",
+        "android_client_info": {
+          "package_name": "com.jachdev.consumerprotection"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "233393668944-t2e0sj8m2o379ic9007deoi5ec0etcei.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.jachdev.consumerprotection",
+            "certificate_hash": "e4cb09c19e3859695f2e35b9d3f757928a0c711e"
+          }
+        },
+        {
+          "client_id": "233393668944-5o90nstes5ptfm35dshlvhat32hlon3n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAJ28Cn6J4o4Eh4oUYqukjpJPrVx9OQRSo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "233393668944-5o90nstes5ptfm35dshlvhat32hlon3n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

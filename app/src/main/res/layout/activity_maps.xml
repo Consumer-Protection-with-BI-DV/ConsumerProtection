@@ -30,7 +30,7 @@
         android:id="@+id/bottom_sheet"
         android:layout_width="match_parent"
         android:layout_height="600dp"
-        android:background="#F4F4F4"
+        android:background="@color/colorPrimary"
         android:orientation="vertical"
         app:behavior_hideable="true"
         app:behavior_peekHeight="50dp"
@@ -44,6 +44,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="@string/nearest_shops"
+            android:textColor="@color/white"
             app:fontType="@string/font_header" />
 
         <androidx.recyclerview.widget.RecyclerView

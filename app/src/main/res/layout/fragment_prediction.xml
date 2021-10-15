@@ -30,6 +30,21 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
+            <com.jachdev.commonlibs.widget.CustomTextView
+                android:id="@+id/et_sub_category"
+                style="@style/EditText"
+                android:layout_margin="@dimen/medium"
+                android:clickable="true"
+                android:focusable="true"
+                android:gravity="center|start"
+                android:hint="@string/sub_category_type"
+                android:inputType="textPersonName|textCapWords"
+                android:visibility="gone"
+                app:fontType="@string/font_para"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_category_type" />
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
@@ -37,7 +52,7 @@
                 android:layout_margin="@dimen/medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_category_type" />
+                app:layout_constraintTop_toBottomOf="@+id/et_sub_category" />
 
             <com.jachdev.commonlibs.widget.CustomTextView
                 android:id="@+id/tvSV"
