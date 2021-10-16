@@ -3,7 +3,7 @@ package com.jachdev.consumerprotection.data.enums;
 import com.jachdev.consumerprotection.R;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 6/5/2021.
+ * Created by Asanka on 6/5/2021.
  */
 public enum PredictionType {
     IMPORT(0), PRICE(1), QUANTITY(2), SALES(3);

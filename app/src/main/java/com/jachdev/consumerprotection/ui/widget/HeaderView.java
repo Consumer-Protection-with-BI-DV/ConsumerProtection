@@ -14,7 +14,7 @@ import com.jachdev.consumerprotection.R;
 import androidx.annotation.Nullable;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 6/5/2021.
+ * Created by Asanka on 6/5/2021.
  */
 public class HeaderView extends FrameLayout {
     private CustomTextView tvHeader;

@@ -1,7 +1,7 @@
 package com.jachdev.consumerprotection.data.enums;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 6/5/2021.
+ * Created by Asanka on 6/5/2021.
  */
 public enum UserType {
     CONSUMER(0), VENDOR(1), ADMIN(2);

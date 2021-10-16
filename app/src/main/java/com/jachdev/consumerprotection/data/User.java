@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName;
 import com.jachdev.consumerprotection.data.enums.UserType;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/20/2021.
+ * Created by Asanka on 9/20/2021.
  */
 public class User {
 

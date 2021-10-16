@@ -5,7 +5,7 @@ import android.app.Application;
 import com.jachdev.consumerprotection.network.AppService;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/20/2021.
+ * Created by Asanka on 9/20/2021.
  */
 public class AppApplication extends Application {
 

@@ -6,7 +6,7 @@ import com.jachdev.consumerprotection.AppConstant;
 import java.io.File;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/28/2021.
+ * Created by Asanka on 9/28/2021.
  */
 public class AddOrgRequest extends BaseRequest{
 

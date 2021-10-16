@@ -1,7 +1,7 @@
 package com.jachdev.consumerprotection.data;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/29/2021.
+ * Created by Asanka on 9/29/2021.
  */
 public class LatLong {
 

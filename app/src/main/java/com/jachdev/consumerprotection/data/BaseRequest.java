@@ -9,7 +9,7 @@ import okhttp3.MultipartBody;
 import okhttp3.RequestBody;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/28/2021.
+ * Created by Asanka on 9/28/2021.
  */
 public class BaseRequest {
 

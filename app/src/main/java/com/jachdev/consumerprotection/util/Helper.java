@@ -24,7 +24,7 @@ import java.util.Locale;
 import id.zelory.compressor.Compressor;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/20/2021.
+ * Created by Asanka on 9/20/2021.
  */
 public class Helper {
 

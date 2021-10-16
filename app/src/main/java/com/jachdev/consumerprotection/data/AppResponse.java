@@ -3,7 +3,7 @@ package com.jachdev.consumerprotection.data;
 import com.google.gson.Gson;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/20/2021.
+ * Created by Asanka on 9/20/2021.
  */
 public class AppResponse {
 

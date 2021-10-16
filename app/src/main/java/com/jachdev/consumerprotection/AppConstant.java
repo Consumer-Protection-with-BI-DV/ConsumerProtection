@@ -1,7 +1,7 @@
 package com.jachdev.consumerprotection;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/20/2021.
+ * Created by Asanka on 9/20/2021.
  */
 public class AppConstant {
     public static final String BASE_URL = "http://192.168.1.4:5000/";

@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 9/29/2021.
+ * Created by Asanka on 9/29/2021.
  */
 public class Shop {
 

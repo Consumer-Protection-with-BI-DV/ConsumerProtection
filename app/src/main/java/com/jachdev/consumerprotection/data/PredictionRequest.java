@@ -3,7 +3,7 @@ package com.jachdev.consumerprotection.data;
 import com.google.gson.annotations.SerializedName;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 10/3/2021.
+ * Created by Asanka on 10/3/2021.
  */
 public class PredictionRequest {
 

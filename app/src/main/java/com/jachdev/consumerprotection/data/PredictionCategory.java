@@ -5,7 +5,7 @@ import com.jachdev.consumerprotection.data.enums.PredictionType;
 import java.util.List;
 
 /**
- * Created by Charitha Ratnayake(charitha.r@eyepax.com) on 10/11/2021.
+ * Created by Asanka on 10/11/2021.
  */
 public class PredictionCategory {
 

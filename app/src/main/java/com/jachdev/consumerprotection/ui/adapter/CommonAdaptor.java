@@ -26,7 +26,7 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 
 /**
- * Created by Charitha Ratnayake(charitha@techleadintl.com) on 7/30/2021.
+ * Created by Asanka on 7/30/2021.
  */
 public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHolder> {
 
