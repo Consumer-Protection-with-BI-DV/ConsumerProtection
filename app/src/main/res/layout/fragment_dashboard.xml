@@ -1,271 +1,275 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.core.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingTop="@dimen/margin_large"
-    android:orientation="vertical"
-    tools:context=".ui.dashboard.DashboardFragment">
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat3"
+    android:layout_height="match_parent">
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toTopOf="parent">
+        android:layout_height="match_parent"
+        android:paddingTop="@dimen/margin_large"
+        android:orientation="vertical"
+        tools:context=".ui.dashboard.DashboardFragment">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btnNearestStocks"
-            android:layout_width="140dp"
+            android:id="@+id/linearLayoutCompat3"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium"
-            android:background="@color/white"
-            android:elevation="4dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/low">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toTopOf="parent">
 
-            <com.jachdev.commonlibs.widget.CustomImageView
-                style="@style/ImageView"
-                android:layout_width="65dp"
-                android:layout_height="85dp"
-                android:src="@drawable/ic_corporation" />
-
-            <com.jachdev.commonlibs.widget.CustomTextView
-                style="@style/TextView"
-                android:gravity="center"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnNearestStocks"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:text="@string/nearest_stocks"
-                app:fontType="@string/font_para" />
+                android:layout_margin="@dimen/medium"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/low">
+
+                <com.jachdev.commonlibs.widget.CustomImageView
+                    style="@style/ImageView"
+                    android:layout_width="65dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_corporation" />
+
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nearest_stocks"
+                    app:fontType="@string/font_para" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnNearestShops"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/low">
+
+                <com.jachdev.commonlibs.widget.CustomImageView
+                    style="@style/ImageView"
+                    android:layout_width="65dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_shop" />
+
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/nearest_shops"
+                    app:fontType="@string/font_para" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btnNearestShops"
-            android:layout_width="140dp"
+            android:id="@+id/linearLayoutCompat4"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium"
-            android:background="@color/white"
-            android:elevation="4dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/low">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat3">
 
-            <com.jachdev.commonlibs.widget.CustomImageView
-                style="@style/ImageView"
-                android:layout_width="65dp"
-                android:layout_height="85dp"
-                android:src="@drawable/ic_shop" />
-
-            <com.jachdev.commonlibs.widget.CustomTextView
-                style="@style/TextView"
-                android:gravity="center"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnImport"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:text="@string/nearest_shops"
-                app:fontType="@string/font_para" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat4"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat3">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btnImport"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium"
-            android:background="@color/white"
-            android:elevation="4dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/low">
-
-            <com.jachdev.commonlibs.widget.CustomImageView
-                style="@style/ImageView"
-                android:layout_width="65dp"
-                android:layout_height="85dp"
-                android:src="@drawable/ic_resource_import" />
-
-            <com.jachdev.commonlibs.widget.CustomTextView
-                style="@style/TextView"
+                android:layout_margin="@dimen/medium"
+                android:background="@color/white"
+                android:elevation="4dp"
                 android:gravity="center"
-                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/low">
+
+                <com.jachdev.commonlibs.widget.CustomImageView
+                    style="@style/ImageView"
+                    android:layout_width="65dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_resource_import" />
+
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/import_prediction"
+                    app:fontType="@string/font_para" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnPrice"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:text="@string/import_prediction"
-                app:fontType="@string/font_para" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btnPrice"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium"
-            android:background="@color/white"
-            android:elevation="4dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/low">
-
-            <com.jachdev.commonlibs.widget.CustomImageView
-                style="@style/ImageView"
-                android:layout_width="65dp"
-                android:layout_height="85dp"
-                android:src="@drawable/ic_price" />
-
-            <com.jachdev.commonlibs.widget.CustomTextView
-                style="@style/TextView"
+                android:layout_margin="@dimen/medium"
+                android:background="@color/white"
+                android:elevation="4dp"
                 android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/price_prediction"
-                app:fontType="@string/font_para" />
+                android:orientation="vertical"
+                android:padding="@dimen/low">
 
-        </androidx.appcompat.widget.LinearLayoutCompat>
+                <com.jachdev.commonlibs.widget.CustomImageView
+                    style="@style/ImageView"
+                    android:layout_width="65dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_price" />
 
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price_prediction"
+                    app:fontType="@string/font_para" />
 
-    </androidx.appcompat.widget.LinearLayoutCompat>
+            </androidx.appcompat.widget.LinearLayoutCompat>
 
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:id="@+id/linearLayoutCompat5"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4">
-
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btnSale"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium"
-            android:background="@color/white"
-            android:elevation="4dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/low">
-
-            <ImageView
-                style="@style/ImageView"
-                android:layout_width="65dp"
-                android:layout_height="85dp"
-                android:scaleType="centerInside"
-                android:src="@drawable/ic_growth" />
-
-            <com.jachdev.commonlibs.widget.CustomTextView
-                style="@style/TextView"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/sales_prediction"
-                app:fontType="@string/font_para" />
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:layout_width="140dp"
+            android:id="@+id/linearLayoutCompat5"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium"
-            android:background="@color/white"
-            android:elevation="4dp"
-            android:visibility="gone"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/low">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat4">
 
-            <com.jachdev.commonlibs.widget.CustomImageView
-                style="@style/ImageView"
-                android:layout_width="65dp"
-                android:layout_height="85dp"
-                android:src="@drawable/ic_complain" />
-
-            <com.jachdev.commonlibs.widget.CustomTextView
-                style="@style/TextView"
-                android:gravity="center"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnSale"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:text="@string/contact_us"
-                app:fontType="@string/font_para" />
+                android:layout_margin="@dimen/medium"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/low">
+
+                <ImageView
+                    style="@style/ImageView"
+                    android:layout_width="65dp"
+                    android:layout_height="85dp"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/ic_growth" />
+
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sales_prediction"
+                    app:fontType="@string/font_para" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:visibility="gone"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/low">
+
+                <com.jachdev.commonlibs.widget.CustomImageView
+                    style="@style/ImageView"
+                    android:layout_width="65dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_complain" />
+
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contact_us"
+                    app:fontType="@string/font_para" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-    <androidx.appcompat.widget.LinearLayoutCompat
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:orientation="horizontal"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btnComplaints"
-            android:layout_width="140dp"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium"
-            android:background="@color/white"
-            android:elevation="4dp"
             android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/low">
+            android:orientation="horizontal"
+            app:layout_constraintTop_toBottomOf="@+id/linearLayoutCompat5">
 
-            <com.jachdev.commonlibs.widget.CustomImageView
-                style="@style/ImageView"
-                android:layout_width="65dp"
-                android:layout_height="85dp"
-                android:src="@drawable/ic_ad" />
-
-            <com.jachdev.commonlibs.widget.CustomTextView
-                style="@style/TextView"
-                android:gravity="center"
-                android:layout_width="wrap_content"
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnComplaints"
+                android:layout_width="140dp"
                 android:layout_height="wrap_content"
-                android:text="@string/complaints"
-                app:fontType="@string/font_para" />
+                android:layout_margin="@dimen/medium"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/low">
+
+                <com.jachdev.commonlibs.widget.CustomImageView
+                    style="@style/ImageView"
+                    android:layout_width="65dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_ad" />
+
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/complaints"
+                    app:fontType="@string/font_para" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/btnContactUS"
+                android:layout_width="140dp"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/medium"
+                android:background="@color/white"
+                android:elevation="4dp"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/low">
+
+                <com.jachdev.commonlibs.widget.CustomImageView
+                    style="@style/ImageView"
+                    android:layout_width="65dp"
+                    android:layout_height="85dp"
+                    android:src="@drawable/ic_complain" />
+
+                <com.jachdev.commonlibs.widget.CustomTextView
+                    style="@style/TextView"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/contact_us"
+                    app:fontType="@string/font_para" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
 
         </androidx.appcompat.widget.LinearLayoutCompat>
 
-        <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/btnContactUS"
-            android:layout_width="140dp"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/medium"
-            android:background="@color/white"
-            android:elevation="4dp"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/low">
-
-            <com.jachdev.commonlibs.widget.CustomImageView
-                style="@style/ImageView"
-                android:layout_width="65dp"
-                android:layout_height="85dp"
-                android:src="@drawable/ic_complain" />
-
-            <com.jachdev.commonlibs.widget.CustomTextView
-                style="@style/TextView"
-                android:gravity="center"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/contact_us"
-                app:fontType="@string/font_para" />
-
-        </androidx.appcompat.widget.LinearLayoutCompat>
-
-
-    </androidx.appcompat.widget.LinearLayoutCompat>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</androidx.core.widget.NestedScrollView>
