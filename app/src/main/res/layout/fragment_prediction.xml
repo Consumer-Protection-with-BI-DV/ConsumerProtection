@@ -45,14 +45,37 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/et_category_type" />
 
+            <com.jachdev.commonlibs.widget.CustomTextView
+                android:id="@+id/tvYAxisLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="@dimen/medium"
+                android:layout_marginStart="@dimen/medium"
+                app:fontType="@string/font_para_extra_light"
+                android:text="YAxis"
+                app:layout_constraintBottom_toTopOf="@+id/chart"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/et_sub_category" />
+
             <com.github.mikephil.charting.charts.LineChart
                 android:id="@+id/chart"
                 android:layout_width="match_parent"
                 android:layout_height="400dp"
-                android:layout_margin="@dimen/medium"
+                android:layout_marginStart="@dimen/medium"
+                android:layout_marginEnd="@dimen/medium"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/et_sub_category" />
+                app:layout_constraintTop_toBottomOf="@+id/tvYAxisLabel" />
+
+            <com.jachdev.commonlibs.widget.CustomTextView
+                android:id="@+id/tvXAxisLabel"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="@dimen/medium"
+                android:text="XAxis"
+                app:fontType="@string/font_para_extra_light"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/chart" />
 
             <com.jachdev.commonlibs.widget.CustomTextView
                 android:id="@+id/tvSV"

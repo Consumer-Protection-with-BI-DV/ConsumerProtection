@@ -15,6 +15,7 @@ public class AppConstant {
     public static final String PATH_GET_ESSENTIALS = "getEssentials";
     public static final String PATH_COMPLAINTS = "complaints";
     public static final String PATH_GET_ALL_SHOPS = "getAllShops";
+    public static final String PATH_GET_NOTIFICATIONS = "getNotifications";
 
     public static final String ORG_LOGO_KEY = "logo";
     public static final int IMAGE_LIMIT = 1;

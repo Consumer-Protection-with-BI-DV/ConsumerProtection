@@ -12,8 +12,10 @@ import com.jachdev.consumerprotection.R;
 import com.jachdev.consumerprotection.data.FirebasePredictionData;
 import com.jachdev.consumerprotection.data.Organization;
 import com.jachdev.consumerprotection.data.User;
+import com.jachdev.consumerprotection.data.enums.UserType;
 import com.jachdev.consumerprotection.ui.adapter.CommonAdaptor;
 import com.jachdev.consumerprotection.util.Helper;
+import com.jachdev.consumerprotection.util.SessionManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -76,18 +78,31 @@ public class HomeFragment extends BaseFragment {
         homeViewModel =
                 new ViewModelProvider(this).get(HomeViewModel.class);
 
-        showWaiting();
-
         init();
 
         homeViewModel.getUser().observe(getViewLifecycleOwner(), mUserObserver);
-        homeViewModel.getOrganization().observe(getViewLifecycleOwner(), mOrgObserver);
         homeViewModel.getSalesPredictionData().observe(getViewLifecycleOwner(), mSalesPredictionObserver);
         homeViewModel.getPricePredictionData().observe(getViewLifecycleOwner(), mPricePredictionObserver);
         homeViewModel.getImportPredictionData().observe(getViewLifecycleOwner(), mImportPredictionObserver);
     }
 
     private void init() {
+        UserType userType = SessionManager.getInstance().getUser().getUserType();
+
+        switch (userType){
+            case CONSUMER:
+                btnAddOrg.setVisibility(View.GONE);
+                layoutOrg.setVisibility(View.GONE);
+                break;
+            case ADMIN:
+            case VENDOR:
+                showWaiting();
+                homeViewModel.getOrganization().observe(getViewLifecycleOwner(), mOrgObserver);
+                btnAddOrg.setVisibility(View.VISIBLE);
+                layoutOrg.setVisibility(View.VISIBLE);
+                break;
+        }
+
         //sales
         salesAdapter = new CommonAdaptor<>(getBaseActivity(), sales, new CommonAdaptor.CommonAdaptorCallback() {
             @Override
@@ -140,7 +155,7 @@ public class HomeFragment extends BaseFragment {
     private Observer<? super User> mUserObserver = new Observer<User>() {
         @Override
         public void onChanged(@Nullable User user) {
-            String header = getString(R.string.hello) + " " + user.getEmail();
+            String header = getString(R.string.hello) + " " + user.getName();
             tvHeader.setAnyText(header);
         }
     };

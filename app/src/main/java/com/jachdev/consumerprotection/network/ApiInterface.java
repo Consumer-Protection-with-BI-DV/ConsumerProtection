@@ -55,4 +55,7 @@ public interface ApiInterface {
 
     @GET(AppConstant.PATH_GET_ALL_SHOPS)
     Single<AppResponse> getAllShops();
+
+    @GET(AppConstant.PATH_GET_NOTIFICATIONS)
+    Single<AppResponse> getNotifications(@Query("uid") long uid);
 }

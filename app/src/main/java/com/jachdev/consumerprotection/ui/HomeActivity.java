@@ -2,6 +2,8 @@ package com.jachdev.consumerprotection.ui;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 
 import com.google.android.material.bottomnavigation.BottomNavigationView;
@@ -16,6 +18,7 @@ import com.jachdev.consumerprotection.ui.prediction.ContactUsFragment;
 import com.jachdev.consumerprotection.ui.prediction.PredictionActivity;
 import com.jachdev.consumerprotection.ui.prediction.PredictionFragment;
 import com.jachdev.consumerprotection.ui.vendor.VendorActivity;
+import com.jachdev.consumerprotection.util.SessionManager;
 
 import org.jetbrains.annotations.NotNull;
 
@@ -61,6 +64,23 @@ public class HomeActivity extends BaseActivity implements HomeFragment.FragmentE
     @Override
     protected void onResume() {
         super.onResume();
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.main_menu, menu);
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+
+        SessionManager.getInstance().logoutSession();
+
+        activityToActivity(LoginActivity.class);
+        HomeActivity.this.finish();
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override

@@ -13,6 +13,7 @@ import com.github.mikephil.charting.charts.LineChart;
 import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
+import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
 import com.github.mikephil.charting.data.Entry;
@@ -74,6 +75,10 @@ public class PredictionFragment extends BaseFragment {
     CustomTextView et_category_type;
     @BindView(R.id.et_sub_category)
     CustomTextView et_sub_category;
+    @BindView(R.id.tvXAxisLabel)
+    CustomTextView tvXAxisLabel;
+    @BindView(R.id.tvYAxisLabel)
+    CustomTextView tvYAxisLabel;
 
     private FragmentEventListener listener;
     private AppService service;
@@ -131,6 +136,8 @@ public class PredictionFragment extends BaseFragment {
 
                         getEssentials();
                     }
+
+                    setXYAxis();
                 }
             }
         });
@@ -153,7 +160,6 @@ public class PredictionFragment extends BaseFragment {
         builder.setItems(SUBS, new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
                 et_sub_category.setAnyText(getString(R.string.sub_category_type, SUBS[which]));
                 request.setSubCategory(SUBS[which]);
                 getEssentials();
@@ -172,14 +178,45 @@ public class PredictionFragment extends BaseFragment {
         d.setText("");
         chart.setDescription(d);
 
+        currentPredictionCategory = new PredictionCategory();
         predictionsData = new PredictionsData();
         predictionType = PredictionType.getPredictionType(getArguments().getInt(KEY_PREDICTION_TYPE, 0));
         CATS = predictionsData.getPredictionDataByType(predictionType);
 
         request = new PredictionRequest();
         et_category_type.setAnyText(getString(R.string.category_type, CATS[0]));
-        et_sub_category.setAnyText(getString(R.string.sub_category_type, ""));
+        currentPredictionCategory.setName(CATS[0]);
+
+        if(!predictionsData.getSubs(predictionType, CATS[0]).isEmpty()){
+
+            List<PredictionCategory.SubCategory> subs = predictionsData.getSubs(predictionType, CATS[0]);
+            currentPredictionCategory.setSubCategory(subs);
+            et_sub_category.setAnyText(getString(R.string.sub_category_type, subs.get(0).getName()));
+            et_sub_category.setVisibility(View.VISIBLE);
+            request.setSubCategory(subs.get(0).getName());
+        }
         request.setCategory(CATS[0]);
+
+        setXYAxis();
+    }
+
+    private void setXYAxis() {
+        tvXAxisLabel.setAnyText("Time");
+        switch (predictionType){
+            case IMPORT:
+                tvYAxisLabel.setAnyText("Import (Mt)");
+                break;
+            case PRICE:
+                tvYAxisLabel.setAnyText("Price (Rs)");
+                break;
+            case SALES:
+                if(currentPredictionCategory.getName().equalsIgnoreCase(predictionsData.SALES_CATS[2])){
+                    tvYAxisLabel.setAnyText("Sales (Ltr)");
+                }else{
+                    tvYAxisLabel.setAnyText("Sales (Kg)");
+                }
+                break;
+        }
     }
 
     private void getEssentials() {
@@ -229,7 +266,7 @@ public class PredictionFragment extends BaseFragment {
     private void drawGraph(PredictionData[] data) {
         List<Entry> entries = new ArrayList<Entry>();
         int max = 0;
-        int min = 0;
+        int min = 1000000;
 
         for (int x = 0; x < data.length; x++) {
             PredictionData d = data[x];
@@ -269,6 +306,10 @@ public class PredictionFragment extends BaseFragment {
         xAxis.setValueFormatter(new StickyDateAxisValueFormatter());
         xAxis.setGranularity(1f);
         xAxis.setGranularityEnabled(true);
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+
+        Legend l = chart.getLegend();
+        l.setEnabled(true);
 
         chart.invalidate();
     }
@@ -279,18 +320,18 @@ public class PredictionFragment extends BaseFragment {
 
         //initializing data
         Map<String, Integer> typeAmountMap = new HashMap<>();
-        typeAmountMap.put("Jan",getTotalForMonth(data, 1));
-        typeAmountMap.put("Feb",getTotalForMonth(data, 2));
-        typeAmountMap.put("Mar",getTotalForMonth(data, 3));
-        typeAmountMap.put("Apr",getTotalForMonth(data, 4));
-        typeAmountMap.put("May",getTotalForMonth(data, 5));
-        typeAmountMap.put("Jun",getTotalForMonth(data, 6));
-        typeAmountMap.put("JuL",getTotalForMonth(data, 7));
-        typeAmountMap.put("Aug",getTotalForMonth(data, 8));
-        typeAmountMap.put("Sep",getTotalForMonth(data, 9));
-        typeAmountMap.put("Oct",getTotalForMonth(data, 10));
-        typeAmountMap.put("Nov",getTotalForMonth(data, 11));
-        typeAmountMap.put("Dec",getTotalForMonth(data, 12));
+        typeAmountMap.put("Jan",getTotalForMonth(data, 0)/30);
+        typeAmountMap.put("Feb",getTotalForMonth(data, 1)/30);
+        typeAmountMap.put("Mar",getTotalForMonth(data, 2)/30);
+        typeAmountMap.put("Apr",getTotalForMonth(data, 3)/30);
+        typeAmountMap.put("May",getTotalForMonth(data, 4)/30);
+        typeAmountMap.put("Jun",getTotalForMonth(data, 5)/30);
+        typeAmountMap.put("Jul",getTotalForMonth(data, 6)/30);
+        typeAmountMap.put("Aug",getTotalForMonth(data, 7)/30);
+        typeAmountMap.put("Sep",getTotalForMonth(data, 8)/30);
+        typeAmountMap.put("Oct",getTotalForMonth(data, 9)/30);
+        typeAmountMap.put("Nov",getTotalForMonth(data, 10)/30);
+        typeAmountMap.put("Dec",getTotalForMonth(data, 11)/30);
 
         //initializing colors for the entries
         ArrayList<Integer> colors = new ArrayList<>();
@@ -322,6 +363,7 @@ public class PredictionFragment extends BaseFragment {
         PieData pieData = new PieData(pieDataSet);
         //showing the value of the entries, default true if not set
         pieData.setDrawValues(true);
+
 
         pieChart.setData(pieData);
         pieChart.invalidate();
@@ -380,6 +422,7 @@ public class PredictionFragment extends BaseFragment {
         private final String[] SALES_CATS = new String[]{"Sugar", "Rice", "CoconutOil", "Dhal", "MilkPowder"};
         private final String[] SALES_SUB_CATS = new String[]{"Samba", "Nadu"};
         private final String[] PRICE_CATS = new String[]{"Sugar", "Coconut"};
+        private final String[] PRICE_CATS_SUBS = new String[]{"WholeSale_Pettah", "Retail_Pettah", "WholeSale_Dambulla", "Retail_Dambulla"};
 
         private List<PredictionCategory> imports = new ArrayList<>();
         private List<PredictionCategory> sales = new ArrayList<>();
@@ -395,7 +438,7 @@ public class PredictionFragment extends BaseFragment {
 
         public List<PredictionCategory> getSalesPredictions(){
             sales.add(new PredictionCategory(SALES_CATS[0], null));
-            sales.add(new PredictionCategory(SALES_CATS[1], getSubs(SALES_CATS[0])));
+            sales.add(new PredictionCategory(SALES_CATS[1], getSubs(PredictionType.SALES, SALES_CATS[0])));
             sales.add(new PredictionCategory(SALES_CATS[2], null));
             sales.add(new PredictionCategory(SALES_CATS[3], null));
             sales.add(new PredictionCategory(SALES_CATS[4], null));
@@ -404,18 +447,30 @@ public class PredictionFragment extends BaseFragment {
         }
 
         public List<PredictionCategory> getPricePredictions(){
-            prices.add(new PredictionCategory(PRICE_CATS[0], null));
-            prices.add(new PredictionCategory(PRICE_CATS[1], null));
+            prices.add(new PredictionCategory(PRICE_CATS[0], getSubs(PredictionType.PRICE, PRICE_CATS[0])));
+            prices.add(new PredictionCategory(PRICE_CATS[1], getSubs(PredictionType.PRICE, PRICE_CATS[1])));
 
             return prices;
         }
 
-        private List<PredictionCategory.SubCategory> getSubs(String cat) {
+        private List<PredictionCategory.SubCategory> getSubs(PredictionType type, String cat) {
             List<PredictionCategory.SubCategory> subs = new ArrayList<>();
 
-            if(cat.equalsIgnoreCase(SALES_CATS[0])){
-                subs.add(new PredictionCategory.SubCategory(SALES_SUB_CATS[0]));
-                subs.add(new PredictionCategory.SubCategory(SALES_SUB_CATS[1]));
+            if(type == PredictionType.SALES){
+                if(cat.equalsIgnoreCase(SALES_CATS[0])){
+
+                    subs.add(new PredictionCategory.SubCategory(SALES_SUB_CATS[0]));
+                    subs.add(new PredictionCategory.SubCategory(SALES_SUB_CATS[1]));
+
+                }
+            }else if(type == PredictionType.PRICE){
+                if(cat.equalsIgnoreCase(PRICE_CATS[0]) || cat.equalsIgnoreCase(PRICE_CATS[1])){
+
+                    subs.add(new PredictionCategory.SubCategory(PRICE_CATS_SUBS[0]));
+                    subs.add(new PredictionCategory.SubCategory(PRICE_CATS_SUBS[1]));
+                    subs.add(new PredictionCategory.SubCategory(PRICE_CATS_SUBS[2]));
+                    subs.add(new PredictionCategory.SubCategory(PRICE_CATS_SUBS[3]));
+                }
             }
 
             return subs;

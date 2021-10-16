@@ -87,7 +87,7 @@ public class SignUpActivity extends BaseActivity {
         user.setNumber(etPhone.getTrimText());
         user.setPassword(etPassword.getTrimText());
         user.setBirthDay(0);
-        user.setName("");
+        user.setName(etName.getTrimText());
         user.setGender(0);
 
         service.getServer().signUp(user)

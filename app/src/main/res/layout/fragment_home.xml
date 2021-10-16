@@ -8,19 +8,21 @@
 
     <com.jachdev.commonlibs.widget.CustomTextView
         android:id="@+id/tv_header"
-        android:layout_width="wrap_content"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/medium"
         android:gravity="center|start"
-        android:maxLines="1"
-        android:textAlignment="center"
+        android:maxLines="2"
+        android:textAlignment="textStart"
         android:textColor="@color/colorPrimaryText"
         android:textSize="24sp"
         app:fontType="@string/font_header"
+        app:layout_constraintEnd_toStartOf="@+id/circleImageView2"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <com.jachdev.commonlibs.widget.CircleImageView
+        android:id="@+id/circleImageView2"
         android:layout_width="36dp"
         android:layout_height="36dp"
         android:layout_margin="@dimen/medium"
@@ -58,10 +60,9 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tv_header">
+        app:layout_constraintTop_toBottomOf="@+id/btn_add_org">
 
         <androidx.appcompat.widget.LinearLayoutCompat
-            android:id="@+id/view_org"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginBottom="50dp"
@@ -69,6 +70,7 @@
             android:visibility="visible">
 
             <androidx.appcompat.widget.LinearLayoutCompat
+                android:id="@+id/view_org"
                 android:layout_width="match_parent"
                 android:layout_height="150dp"
                 android:layout_margin="@dimen/medium"

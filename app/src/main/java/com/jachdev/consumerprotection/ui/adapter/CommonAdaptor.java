@@ -11,6 +11,7 @@ import com.jachdev.commonlibs.widget.CustomTextView;
 import com.jachdev.consumerprotection.R;
 import com.jachdev.consumerprotection.data.AllShopResponse;
 import com.jachdev.consumerprotection.data.FirebasePredictionData;
+import com.jachdev.consumerprotection.data.Notification;
 import com.jachdev.consumerprotection.data.Shop;
 import com.jachdev.consumerprotection.util.Helper;
 
@@ -33,6 +34,7 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
     public static final int VIEW_TYPE_SHOP = R.layout.item_shop;
     public static final int VIEW_TYPE_SHOP_MAP = R.layout.item_shop_map;
     public static final int VIEW_TYPE_FIREBASE_PREDICTION = R.layout.item_prediction;
+    public static final int VIEW_TYPE_NOTIFICATION = R.layout.item_notification;
 
     private Context context;
     private CommonAdaptorCallback callback;
@@ -59,6 +61,9 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
             case VIEW_TYPE_FIREBASE_PREDICTION:
                 view = LayoutInflater.from(parent.getContext()).inflate(VIEW_TYPE_FIREBASE_PREDICTION, parent, false);
                 return new PredictionVH(view);
+            case VIEW_TYPE_NOTIFICATION:
+                view = LayoutInflater.from(parent.getContext()).inflate(VIEW_TYPE_NOTIFICATION, parent, false);
+                return new NotificationVH(view);
             default:
                 throw new IllegalArgumentException("Unexpected view type " + viewType);
         }
@@ -80,6 +85,10 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
             case VIEW_TYPE_FIREBASE_PREDICTION:
                 PredictionVH pvh = (PredictionVH) holder;
                 pvh.onBind((FirebasePredictionData) t, position);
+                break;
+            case VIEW_TYPE_NOTIFICATION:
+                NotificationVH nvh = (NotificationVH) holder;
+                nvh.onBind((Notification) t, position);
                 break;
         }
     }
@@ -129,6 +138,30 @@ public class CommonAdaptor<T> extends RecyclerView.Adapter<RecyclerView.ViewHold
         if(data!=null) {
             data.clear();
             notifyDataSetChanged();
+        }
+    }
+
+    public class NotificationVH extends RecyclerView.ViewHolder {
+
+        Context context;
+        @BindView(R.id.tvTitle)
+        CustomTextView tvTitle;
+        @BindView(R.id.tvContent)
+        CustomTextView tvContent;
+        int position;
+
+        public NotificationVH(View itemView) {
+            super(itemView);
+            ButterKnife.bind(this, itemView);
+
+            context = itemView.getContext();
+        }
+
+        public void onBind(Notification item, int position) {
+            this.position = position;
+
+            tvTitle.setAnyText(item.getTitle());
+            tvContent.setAnyText(item.getDescription());
         }
     }
 
