@@ -53,6 +53,7 @@ public class SessionManager {
 
         try{
             mTinyDB.remove(KEY_USER);
+            mTinyDB.remove(KEY_ORG);
 
         }catch (Exception e){
             e.printStackTrace();

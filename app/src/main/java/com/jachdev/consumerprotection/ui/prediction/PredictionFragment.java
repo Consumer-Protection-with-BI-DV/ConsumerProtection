@@ -7,44 +7,41 @@ import android.graphics.Typeface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.TextView;
 
+import com.github.mikephil.charting.charts.BarChart;
 import com.github.mikephil.charting.charts.LineChart;
-import com.github.mikephil.charting.charts.PieChart;
 import com.github.mikephil.charting.components.AxisBase;
 import com.github.mikephil.charting.components.Description;
 import com.github.mikephil.charting.components.Legend;
 import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.components.YAxis;
+import com.github.mikephil.charting.data.BarData;
+import com.github.mikephil.charting.data.BarDataSet;
+import com.github.mikephil.charting.data.BarEntry;
 import com.github.mikephil.charting.data.Entry;
 import com.github.mikephil.charting.data.LineData;
 import com.github.mikephil.charting.data.LineDataSet;
 import com.github.mikephil.charting.data.PieData;
 import com.github.mikephil.charting.data.PieDataSet;
 import com.github.mikephil.charting.data.PieEntry;
-import com.github.mikephil.charting.formatter.IAxisValueFormatter;
 import com.github.mikephil.charting.formatter.IndexAxisValueFormatter;
 import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.jachdev.commonlibs.base.BaseFragment;
-import com.jachdev.commonlibs.utils.DateTimeUtil;
 import com.jachdev.commonlibs.widget.CustomTextView;
 import com.jachdev.consumerprotection.AppApplication;
 import com.jachdev.consumerprotection.R;
 import com.jachdev.consumerprotection.data.AppResponse;
-import com.jachdev.consumerprotection.data.Category;
 import com.jachdev.consumerprotection.data.PredictionCategory;
 import com.jachdev.consumerprotection.data.PredictionData;
 import com.jachdev.consumerprotection.data.PredictionRequest;
 import com.jachdev.consumerprotection.data.enums.PredictionType;
 import com.jachdev.consumerprotection.network.AppService;
-import com.jachdev.consumerprotection.util.Helper;
 import com.pd.chocobar.ChocoBar;
 
 import org.jetbrains.annotations.NotNull;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -70,7 +67,7 @@ public class PredictionFragment extends BaseFragment {
     @BindView(R.id.chart)
     LineChart chart;
     @BindView(R.id.pieChart)
-    PieChart pieChart;
+    BarChart barChart;
     @BindView(R.id.et_category_type)
     CustomTextView et_category_type;
     @BindView(R.id.et_sub_category)
@@ -243,7 +240,7 @@ public class PredictionFragment extends BaseFragment {
                             default:
                                 showError(response.getMessage());
                                 chart.clear();
-                                pieChart.clear();
+                                barChart.clear();
                                 break;
                         }
                     }
@@ -315,23 +312,23 @@ public class PredictionFragment extends BaseFragment {
     }
 
     private void drawPieChart(PredictionData[] data) {
-        ArrayList<PieEntry> pieEntries = new ArrayList<>();
+        ArrayList<BarEntry> pieEntries = new ArrayList<>();
         String label = "Date";
 
         //initializing data
-        Map<String, Integer> typeAmountMap = new HashMap<>();
-        typeAmountMap.put("Jan",getTotalForMonth(data, 0)/30);
-        typeAmountMap.put("Feb",getTotalForMonth(data, 1)/30);
-        typeAmountMap.put("Mar",getTotalForMonth(data, 2)/30);
-        typeAmountMap.put("Apr",getTotalForMonth(data, 3)/30);
-        typeAmountMap.put("May",getTotalForMonth(data, 4)/30);
-        typeAmountMap.put("Jun",getTotalForMonth(data, 5)/30);
-        typeAmountMap.put("Jul",getTotalForMonth(data, 6)/30);
-        typeAmountMap.put("Aug",getTotalForMonth(data, 7)/30);
-        typeAmountMap.put("Sep",getTotalForMonth(data, 8)/30);
-        typeAmountMap.put("Oct",getTotalForMonth(data, 9)/30);
-        typeAmountMap.put("Nov",getTotalForMonth(data, 10)/30);
-        typeAmountMap.put("Dec",getTotalForMonth(data, 11)/30);
+        Map<Float, Integer> typeAmountMap = new HashMap<>();
+        typeAmountMap.put(0F,getTotalForMonth(data, 0)/30);
+        typeAmountMap.put(1F,getTotalForMonth(data, 1)/30);
+        typeAmountMap.put(2F,getTotalForMonth(data, 2)/30);
+        typeAmountMap.put(3F,getTotalForMonth(data, 3)/30);
+        typeAmountMap.put(4F,getTotalForMonth(data, 4)/30);
+        typeAmountMap.put(5F,getTotalForMonth(data, 5)/30);
+        typeAmountMap.put(6F,getTotalForMonth(data, 6)/30);
+        typeAmountMap.put(7F,getTotalForMonth(data, 7)/30);
+        typeAmountMap.put(8F,getTotalForMonth(data, 8)/30);
+        typeAmountMap.put(9F,getTotalForMonth(data, 9)/30);
+        typeAmountMap.put(10F,getTotalForMonth(data, 10)/30);
+        typeAmountMap.put(11F,getTotalForMonth(data, 11)/30);
 
         //initializing colors for the entries
         ArrayList<Integer> colors = new ArrayList<>();
@@ -349,24 +346,56 @@ public class PredictionFragment extends BaseFragment {
         colors.add(Color.parseColor("#263238"));
 
         //input data and fit data into pie chart entry
-        for(String type: typeAmountMap.keySet()){
-            pieEntries.add(new PieEntry(typeAmountMap.get(type).floatValue(), type));
+        for(Float type: typeAmountMap.keySet()){
+            pieEntries.add(new BarEntry(type, typeAmountMap.get(type).floatValue()));
         }
 
         //collecting the entries with label name
-        PieDataSet pieDataSet = new PieDataSet(pieEntries,label);
+        BarDataSet barDataSet = new BarDataSet(pieEntries,label);
         //setting text size of the value
-        pieDataSet.setValueTextSize(12f);
+        barDataSet.setValueTextSize(12f);
         //providing color list for coloring different entries
-        pieDataSet.setColors(colors);
+        barDataSet.setColors(colors);
         //grouping the data set from entry to chart
-        PieData pieData = new PieData(pieDataSet);
+        BarData barData = new BarData(barDataSet);
         //showing the value of the entries, default true if not set
-        pieData.setDrawValues(true);
+        barData.setDrawValues(true);
 
+        Description description = new Description();
+        description.setEnabled(false);
+        barChart.setDescription(description);
 
-        pieChart.setData(pieData);
-        pieChart.invalidate();
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setGranularity(1f);
+
+        ArrayList<String> xAxisLabel = new ArrayList<>();
+        xAxisLabel.add("Jan");
+        xAxisLabel.add("Feb");
+        xAxisLabel.add("Mar");
+        xAxisLabel.add("Apr");
+        xAxisLabel.add("May");
+        xAxisLabel.add("Jun");
+        xAxisLabel.add("Jul");
+        xAxisLabel.add("Aug");
+        xAxisLabel.add("Sep");
+        xAxisLabel.add("Oct");
+        xAxisLabel.add("Nov");
+        xAxisLabel.add("Dec");
+        xAxis.setValueFormatter(new IndexAxisValueFormatter(xAxisLabel));
+
+        YAxis leftAxis = barChart.getAxisLeft();
+
+        Legend legend = barChart.getLegend();
+        legend.setForm(Legend.LegendForm.LINE);
+        legend.setTextSize(11f);
+        legend.setVerticalAlignment(Legend.LegendVerticalAlignment.BOTTOM);
+        legend.setHorizontalAlignment(Legend.LegendHorizontalAlignment.LEFT);
+        legend.setOrientation(Legend.LegendOrientation.HORIZONTAL);
+        legend.setDrawInside(false);
+
+        barChart.setData(barData);
+        barChart.invalidate();
     }
 
     private Integer getTotalForMonth(PredictionData[] data, int i) {
@@ -457,7 +486,7 @@ public class PredictionFragment extends BaseFragment {
             List<PredictionCategory.SubCategory> subs = new ArrayList<>();
 
             if(type == PredictionType.SALES){
-                if(cat.equalsIgnoreCase(SALES_CATS[0])){
+                if(cat.equalsIgnoreCase(SALES_CATS[1])){
 
                     subs.add(new PredictionCategory.SubCategory(SALES_SUB_CATS[0]));
                     subs.add(new PredictionCategory.SubCategory(SALES_SUB_CATS[1]));

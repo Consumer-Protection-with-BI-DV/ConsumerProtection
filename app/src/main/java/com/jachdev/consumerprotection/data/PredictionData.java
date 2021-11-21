@@ -39,13 +39,13 @@ public class PredictionData {
     public Integer getValue() {
         if(importValue != null){
 
-            return Integer.parseInt(importValue);
+            return (int)Double.parseDouble(importValue);
         }else if(priceValue != null){
 
-            return Integer.parseInt(priceValue);
+            return (int)Double.parseDouble(priceValue);
         }else if(salesValue != null){
 
-            return Integer.parseInt(salesValue);
+            return (int)Double.parseDouble(salesValue);
         }
         return 0;
     }

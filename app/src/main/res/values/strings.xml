@@ -72,4 +72,6 @@
     <string name="seasonal_variation">Seasonal variation</string>
     <string name="sales_prediction">Sales Prediction</string>
     <string name="min_max_ratio_10_100">Min/Max Ratio: %s ~ %s</string>
+    <string name="_947">+947########</string>
+    <string name="enter_6_digit_pin">Enter 6 digit pin</string>
 </resources>

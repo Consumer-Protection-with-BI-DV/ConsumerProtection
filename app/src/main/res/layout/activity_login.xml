@@ -16,68 +16,130 @@
         app:layout_constraintTop_toTopOf="parent"
         app:text="@string/login" />
 
-    <LinearLayout
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="@dimen/medium"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/headerView">
 
-        <com.jachdev.commonlibs.widget.CustomEditText
-            android:id="@+id/et_email"
-            style="@style/EditText"
-            android:hint="@string/email"
-            android:inputType="textEmailAddress"
-            app:fontType="@string/font_para"
-            app:layout_constraintTop_toBottomOf="@+id/headerView" />
-
-        <com.jachdev.commonlibs.widget.CustomEditText
-            android:id="@+id/et_password"
-            style="@style/EditText"
-            android:layout_marginTop="@dimen/medium"
-            android:hint="@string/password"
-            android:inputType="textPassword"
-            app:fontType="@string/font_para"
-            app:layout_constraintTop_toBottomOf="@+id/headerView" />
-
-        <View
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/stroke"
-            android:background="@color/colorPrimary"
-            android:layout_margin="@dimen/medium"/>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:orientation="horizontal">
+            android:orientation="vertical"
+            android:padding="@dimen/medium">
 
-            <com.jachdev.commonlibs.widget.CustomTextView
-                app:fontType="@string/font_para"
-                android:text="@string/don_t_you_have_an_account"
-                style="@style/TextView" />
+            <LinearLayout
+                android:id="@+id/layout_pin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:padding="@dimen/medium">
 
-            <com.jachdev.commonlibs.widget.CustomTextView
-                app:fontType="@string/font_header"
-                android:text="@string/sign_up"
-                android:textColor="@color/colorPrimaryText"
-                style="@style/TextView"
-                android:paddingStart="@dimen/low"
-                android:paddingEnd="@dimen/low"
-                android:onClick="onSignUpClick"/>
+                <com.jachdev.commonlibs.widget.CustomEditText
+                    android:id="@+id/et_pin"
+                    style="@style/EditText"
+                    android:layout_marginTop="@dimen/medium"
+                    android:hint="@string/enter_6_digit_pin"
+                    android:inputType="number"
+                    app:fontType="@string/font_para"
+                    app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/stroke"
+                    android:background="@color/colorPrimary"
+                    android:layout_margin="@dimen/medium"/>
+
+                <com.jachdev.commonlibs.widget.CustomButton
+                    app:fontType="@string/font_para"
+                    android:text="@string/submit"
+                    style="@style/Button"
+                    android:onClick="onSubmitClick"/>
+
+                <com.jachdev.commonlibs.widget.CustomButton
+                    app:fontType="@string/font_para"
+                    android:layout_marginTop="@dimen/low"
+                    android:text="@string/cancel"
+                    style="@style/Button"
+                    android:onClick="onCancelClick"/>
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/layout_sign_in"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:padding="@dimen/medium">
+
+                <com.jachdev.commonlibs.widget.CustomEditText
+                    android:id="@+id/et_phone"
+                    style="@style/EditText"
+                    android:layout_marginTop="@dimen/medium"
+                    android:hint="@string/_947"
+                    android:inputType="phone"
+                    app:fontType="@string/font_para"
+                    app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+                <com.jachdev.commonlibs.widget.CustomEditText
+                    android:id="@+id/et_email"
+                    android:layout_marginTop="@dimen/medium"
+                    style="@style/EditText"
+                    android:hint="@string/email"
+                    android:inputType="textEmailAddress"
+                    app:fontType="@string/font_para"
+                    app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+                <com.jachdev.commonlibs.widget.CustomEditText
+                    android:id="@+id/et_password"
+                    style="@style/EditText"
+                    android:layout_marginTop="@dimen/medium"
+                    android:hint="@string/password"
+                    android:inputType="textPassword"
+                    app:fontType="@string/font_para"
+                    app:layout_constraintTop_toBottomOf="@+id/headerView" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/stroke"
+                    android:background="@color/colorPrimary"
+                    android:layout_margin="@dimen/medium"/>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:orientation="horizontal">
+
+                    <com.jachdev.commonlibs.widget.CustomTextView
+                        app:fontType="@string/font_para"
+                        android:text="@string/don_t_you_have_an_account"
+                        style="@style/TextView" />
+
+                    <com.jachdev.commonlibs.widget.CustomTextView
+                        app:fontType="@string/font_header"
+                        android:text="@string/sign_up"
+                        android:textColor="@color/colorPrimaryText"
+                        style="@style/TextView"
+                        android:paddingStart="@dimen/low"
+                        android:paddingEnd="@dimen/low"
+                        android:onClick="onSignUpClick"/>
+
+                </LinearLayout>
+
+                <com.jachdev.commonlibs.widget.CustomButton
+                    android:layout_marginTop="@dimen/medium"
+                    app:fontType="@string/font_para"
+                    android:text="@string/sign_in"
+                    style="@style/Button"
+                    android:onClick="onSignInClick"/>
+
+            </LinearLayout>
 
         </LinearLayout>
-
-        <com.jachdev.commonlibs.widget.CustomButton
-            android:layout_marginTop="@dimen/medium"
-            app:fontType="@string/font_para"
-            android:text="@string/sign_in"
-            style="@style/Button"
-            android:onClick="onSignInClick"/>
-
-    </LinearLayout>
+    </androidx.core.widget.NestedScrollView>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
