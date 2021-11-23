@@ -81,4 +81,7 @@ dependencies {
     implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
 
     implementation 'com.google.firebase:firebase-auth'
+    implementation 'com.google.android.gms:play-services-safetynet:17.0.1'
+    implementation 'com.google.firebase:firebase-dynamic-links'
+    implementation 'com.google.firebase:firebase-analytics'
 }

@@ -20,6 +20,7 @@ public class SessionManager {
     private static final String PACKAGE_NAME = SessionManager.class.getPackage() + ".";
     private static final String KEY_USER = PACKAGE_NAME + "KEY_USER";
     private static final String KEY_ORG = PACKAGE_NAME + "KEY_ORG";
+    private static final String KEY_LOGGED_IN = PACKAGE_NAME + "KEY_LOGGED_IN";
 
 
     private TinyDb mTinyDB;
@@ -54,6 +55,7 @@ public class SessionManager {
         try{
             mTinyDB.remove(KEY_USER);
             mTinyDB.remove(KEY_ORG);
+            mTinyDB.remove(KEY_LOGGED_IN);
 
         }catch (Exception e){
             e.printStackTrace();
@@ -68,8 +70,12 @@ public class SessionManager {
         return mTinyDB.getObject(KEY_USER, User.class);
     }
 
+    public void setLoggedIn(boolean status) {
+        mTinyDB.putBoolean(KEY_LOGGED_IN, status);
+    }
+
     public boolean isLoggedIn() {
-        return getUser() != null;
+        return mTinyDB.getBoolean(KEY_LOGGED_IN);
     }
 
     public void setOrganization(Organization organization) {

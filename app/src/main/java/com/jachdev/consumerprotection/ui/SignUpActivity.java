@@ -102,9 +102,7 @@ public class SignUpActivity extends BaseActivity {
                     public void onSuccess(@NotNull AppResponse response) {
                         switch (response.getCode()){
                             case 0:
-                                SessionManager.getInstance().setUser(response.getObjectToType(User.class));
-                                activityToActivity(HomeActivity.class);
-                                SignUpActivity.this.finish();
+                                onBackPressed();
                                 break;
                             default:
                                 showError(response.getMessage());

@@ -76,6 +76,10 @@ public class PredictionFragment extends BaseFragment {
     CustomTextView tvXAxisLabel;
     @BindView(R.id.tvYAxisLabel)
     CustomTextView tvYAxisLabel;
+    @BindView(R.id.tvXAxisLabel2)
+    CustomTextView tvXAxisLabel2;
+    @BindView(R.id.tvYAxisLabel2)
+    CustomTextView tvYAxisLabel2;
 
     private FragmentEventListener listener;
     private AppService service;
@@ -199,18 +203,23 @@ public class PredictionFragment extends BaseFragment {
 
     private void setXYAxis() {
         tvXAxisLabel.setAnyText("Time");
+        tvXAxisLabel2.setAnyText("Time");
         switch (predictionType){
             case IMPORT:
                 tvYAxisLabel.setAnyText("Import (Mt)");
+                tvYAxisLabel2.setAnyText("Import (Mt)");
                 break;
             case PRICE:
                 tvYAxisLabel.setAnyText("Price (Rs)");
+                tvYAxisLabel2.setAnyText("Price (Rs)");
                 break;
             case SALES:
                 if(currentPredictionCategory.getName().equalsIgnoreCase(predictionsData.SALES_CATS[2])){
                     tvYAxisLabel.setAnyText("Sales (Ltr)");
+                    tvYAxisLabel2.setAnyText("Sales (Ltr)");
                 }else{
                     tvYAxisLabel.setAnyText("Sales (Kg)");
+                    tvYAxisLabel2.setAnyText("Sales (Kg)");
                 }
                 break;
         }

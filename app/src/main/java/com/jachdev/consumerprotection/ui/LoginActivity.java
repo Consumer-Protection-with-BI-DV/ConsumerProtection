@@ -11,13 +11,17 @@ import io.reactivex.schedulers.Schedulers;
 
 import android.graphics.Color;
 import android.graphics.Typeface;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.FirebaseException;
+import com.google.firebase.auth.ActionCodeSettings;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException;
@@ -25,6 +29,8 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
+import com.google.firebase.dynamiclinks.FirebaseDynamicLinks;
+import com.google.firebase.dynamiclinks.PendingDynamicLinkData;
 import com.jachdev.commonlibs.base.BaseActivity;
 import com.jachdev.commonlibs.validator.Validator;
 import com.jachdev.commonlibs.widget.CustomEditText;
@@ -68,6 +74,36 @@ public class LoginActivity extends BaseActivity {
 
         service = AppApplication.getInstance().getAppService();
         mAuth = FirebaseAuth.getInstance();
+
+        FirebaseDynamicLinks.getInstance()
+                .getDynamicLink(getIntent())
+                .addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
+                    @Override
+                    public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
+                        // Get deep link from result (may be null if no link is found)
+                        Uri deepLink = null;
+                        if (pendingDynamicLinkData != null) {
+                            deepLink = pendingDynamicLinkData.getLink();
+                        }
+
+                        if (deepLink != null && deepLink.getQueryParameter("continueUrl").contains(etEmail.getTrimText())){
+                            Uri uri = Uri.parse(deepLink.getQueryParameter("continueUrl"));
+                            String email = uri.getQueryParameter("email");
+                            User user = SessionManager.getInstance().getUser();
+                            if(user.getEmail().equalsIgnoreCase(email)){
+                                verifyPhone(user.getNumber());
+                            }else{
+                                showError("Email authentication has failed.");
+                            }
+                        }
+                    }
+                })
+                .addOnFailureListener(this, new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Log.w(TAG, "getDynamicLink:onFailure", e);
+                    }
+                });
     }
 
     public void onSignUpClick(View view) {
@@ -112,7 +148,10 @@ public class LoginActivity extends BaseActivity {
                             case 0:
 
                                 mUser = response.getObjectToType(User.class);
-                                verifyPhone();
+                                mUser.setNumber(etPhone.getTextString());
+                                SessionManager.getInstance().setUser(mUser);
+
+                                signInWithEmailAuthCredential(etEmail.getTrimText());
 
                                 break;
                             default:
@@ -128,10 +167,10 @@ public class LoginActivity extends BaseActivity {
                 });
     }
 
-    private void verifyPhone() {
+    private void verifyPhone(String number) {
         PhoneAuthOptions options =
                 PhoneAuthOptions.newBuilder(mAuth)
-                        .setPhoneNumber(etPhone.getTrimText())       // Phone number to verify
+                        .setPhoneNumber(number)       // Phone number to verify
                         .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
                         .setActivity(this)                 // Activity (for callback binding)
                         .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
@@ -192,6 +231,38 @@ public class LoginActivity extends BaseActivity {
         }
     };
 
+    private void signInWithEmailAuthCredential(String email) {
+        ActionCodeSettings actionCodeSettings =
+                ActionCodeSettings.newBuilder()
+                        // URL you want to redirect back to. The domain (www.example.com) for this
+                        // URL must be whitelisted in the Firebase Console.
+                        .setUrl("https://consumerprotection.page.link/finishSignUp?email=" + email)
+                        // This must be true
+                        .setHandleCodeInApp(true)
+                        .setIOSBundleId("com.jachdev.consumerprotection.ios")
+                        .setAndroidPackageName(
+                                "com.jachdev.consumerprotection",
+                                true, /* installIfNotAvailable */
+                                "12"    /* minimumVersion */)
+                        .build();
+
+        FirebaseAuth auth = FirebaseAuth.getInstance();
+        auth.sendSignInLinkToEmail(email, actionCodeSettings)
+                .addOnCompleteListener(new OnCompleteListener<Void>() {
+                    @Override
+                    public void onComplete(@NonNull Task<Void> task) {
+                        if (task.isSuccessful()) {
+                            showMessage("Please verify your email by the click the link we sent to.");
+                        }
+                    }
+                }).addOnFailureListener(this, new OnFailureListener() {
+            @Override
+            public void onFailure(@NonNull @NotNull Exception e) {
+                e.printStackTrace();
+            }
+        });
+    }
+
     private User mUser;
 
     private void signInWithPhoneAuthCredential(PhoneAuthCredential credential) {
@@ -204,7 +275,7 @@ public class LoginActivity extends BaseActivity {
                             Log.d(TAG, "signInWithCredential:success");
 
                             FirebaseUser user = task.getResult().getUser();
-                            SessionManager.getInstance().setUser(mUser);
+                            SessionManager.getInstance().setLoggedIn(true);
                             activityToActivity(HomeActivity.class);
                             LoginActivity.this.finish();
                         } else {
